@@ -1,0 +1,227 @@
+@charset "UTF-8";
+
+.detailTop {
+    /* border: 1px solid black; */
+    height:100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home, .menu, .photo, .review, .reviewBox {
+/* 다 만들고 height값 빼야함 */
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+
+.btnChange {
+    width:400px;
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    padding:10px;
+    border-radius: 10px;
+}
+
+
+.review { 
+    max-width:360px;
+    border:1px solid #777;
+    border-radius: 10px;
+}
+
+.u_nick {
+    float:left;
+    margin-left: 20px;
+}
+
+.rate{
+    float:right;
+    margin-right: 20px;
+}
+
+.reviewImg {
+    margin : 20px auto;
+    display : block;
+    width : 20rem;
+    height:20rem;
+    border-radius: 10px;
+}
+
+hr {
+    clear:both;
+}
+
+.reviewContent {
+    /* margin-left: 20px;
+    margin-right: 20px; */
+    margin : 20px;
+    word-wrap: break-word;
+}
+
+.img {
+    width: 550px;
+    margin: 0 auto;
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap:wrap; /*한 줄에 가득차면 다음 줄로 넘어감*/
+}
+
+#review {
+    border:1px solid #999;
+}
+
+.fLeft {
+    float : left;
+    width : 45%;
+    margin-left: 20px;
+}
+
+.reviewTitle {
+    text-decoration: none;
+    color : black;
+}
+
+.img > a {
+    border:0.5px solid #777;
+    margin: 5px;
+}
+
+        
+.nav {
+display: flex;
+}
+
+.wrap {
+  display: flex;
+  text-align: center;
+  /* align-items: center; */
+  flex-grow:1;
+}
+
+.wrap-item {
+    min-width : 100px;
+    text-align: center;
+    margin : 10px;
+    flex-grow:1;
+}
+
+.nav {
+  left : 0;
+  right : 0;
+  margin : 0 auto;
+}
+
+.card {
+    width:100px;
+}
+
+.slide {
+    text-align: center;
+    margin:0 auto;
+}
+
+.between {  /* content 사이 간격 */
+    height : 30px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.carousel, .carousel-inner {
+  vertical-align: middle;
+  height: 200px;
+}
+
+img {
+  text-align: center;
+  object-fit: cover;
+}
+
+.dropdown{
+    float:right;
+    margin-right: 20px;
+  }
+  
+  .dropdown-content{
+    display : none;
+    position : absolute;
+    z-index : 1; /*다른 요소들보다 앞에 배치*/
+    width:40px;
+    background-color: white;
+  }
+  
+  .dropdown-content button{
+    display : block;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .btn {
+      width:100px;
+        border : 3px solid #36714B;
+  }
+.reservBox{
+    z-index: 1;
+    height:70px;
+    border : 3px solid #36714B;
+    background-color: #36714B;
+    position: sticky;
+    bottom: 0;
+}
+
+.btnBox {
+    height:70px;
+    line-height: 70px;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+.btnBox img {
+    height : 40px;
+    vertical-align: middle;
+}
+
+.btnBox button {
+    background-color: white;
+}
+
+.restoInfo {
+    margin-left: 20px;
+}
+
+.para {
+    color:#777;
+}
+
+.infoStrong {
+    margin-top: 20px;
+}
+
+.fLeft {
+    float:left;
+    
+}
+
+.menu{
+    clear: both;
+    padding-top: 50px;
+}
+
+.restoDetail {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.reviewBtn {
+    float:right;
+}
+
+.reviewPadding {
+	margin-top: 10px;
+}

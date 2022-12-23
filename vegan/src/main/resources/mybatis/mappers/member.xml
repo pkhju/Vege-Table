@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<resultMap type="java.util.HashMap" id="user_onDTO">
+		<result property="u_name" column="u_name"/>
+		<result property="u_tel" column="u_tel"/>
+		<result property="u_email" column="u_email"/>
+		<result property="u_pwd" column="u_pwd"/>
+		<result property="u_nick" column="u_nick"/>
+		<result property="u_point" column="u_point"/>
+		<result property="u_lvl" column="u_lvl"/>
+		<result property="u_addr" column="u_addr"/>
+		<result property="u_joinDate" column="u_joinDate"/>
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="client_onDTO">
+		<result property="c_name" column="c_name"/>
+		<result property="c_tel" column="c_tel"/>
+		<result property="c_email" column="c_email"/>
+		<result property="c_pwd" column="c_pwd"/>
+		<result property="regiNum" column="regiNum"/>
+		<result property="certify" column="certify"/>
+		<result property="c_point" column="c_point"/>
+		<result property="c_joinDate" column="c_joinDate"/>
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="card_payDTO">
+		<result property="email" column="email" />
+		<result property="card_no" column="card_no" />
+		<result property="card_valid" column="card_valid" />
+		<result property="card_month" column="card_month" />
+		<result property="card_pwd" column="card_pwd" />
+		<result property="card_regiNum" column="card_regiNum" />
+		<result property="point_detail" column="point_detail" />
+		<result property="card_price" column="card_price" />
+		<result property="card_time" column="card_time" />
+	</resultMap>
+	<resultMap type="java.util.HashMap" id="pointDTO">
+		<result property="email" column="email" />
+		<result property="point_change" column="point_change" />
+		<result property="point_rest" column="point_rest" />
+		<result property="point_history" column="point_history" />
+		<result property="point_detail" column="point_detail" />
+		<result property="point_date" column="point_date" />
+	</resultMap>
+	
+	<resultMap type="reservDTO" id="reservResult">
+		<result property="u_email" column="u_email" />
+		<result property="reserv_no" column="reserv_no" />
+		<result property="resto_no" column="resto_no" />
+		<result property="reserv_date" column="reserv_date" />
+		<result property="reserv_sched" column="reserv_sched" />
+		<result property="reserv_member" column="reserv_member" />
+		<result property="reserv_deposit" column="reserv_deposit" />
+		<result property="reserv_condition" column="reserv_condition" />	
+	</resultMap>
+	
+	<select id="checkByEmailPwd_u" resultType="user_onDTO" parameterType="loginDTO">
+		<![CDATA[
+			select * from user_on where u_email = #{email } and u_pwd = #{pwd }
+		]]>
+	</select>
+	
+	<select id="checkByEmailPwd_c" resultType="client_onDTO" parameterType="loginDTO">
+		<![CDATA[
+			select * from client_on where c_email = #{email } and c_pwd = #{pwd }
+		]]>
+	</select>
+	
+	<select id="searchEmail" resultType="String" parameterType="searchDTO">
+		<![CDATA[
+			select u_email from user_on where u_name = #{name } and u_tel = #{tel }
+		]]>
+	</select>
+	
+	<select id="searchEmail_c" resultType="String" parameterType="searchDTO">
+		<![CDATA[
+			select c_email from client_on where c_name = #{name } and c_tel = #{tel }
+		]]>
+	</select>
+	
+	<select id="searchPwd" resultType="String" parameterType="String">
+		<![CDATA[
+			select u_email from user_on where u_email = #{email}
+		]]>
+	</select>
+	
+	<select id="searchPwd_c" resultType="String" parameterType="String">
+		<![CDATA[
+			select c_email from client_on where c_email = #{email}
+		]]>
+	</select>
+	
+	<select id="selectMemberInfo" resultType="user_onDTO" parameterType="String">
+		<![CDATA[
+			select * from user_on where u_email = #{u_email }
+		]]>
+	</select>
+	
+	<select id="selectMemberInfo_c" resultType="client_onDTO" parameterType="String">
+		<![CDATA[
+			select * from client_on where c_email = #{c_email }
+		]]>
+	</select>	
+	
+	<select id="listMemberInfo_u" resultMap="user_onDTO">
+		<![CDATA[
+			select * from user_on order by u_joinDate ASC
+		]]>
+	</select>
+	
+	<select id="listMemberInfo_c" resultMap="client_onDTO">
+		<![CDATA[
+			select * from client_on order by c_joinDate ASC
+		]]>
+	</select>
+	
+	<insert id="insertCardPay" parameterType="card_payDTO" >
+		<![CDATA[
+			insert into card_pay values(#{email}, #{card_no}, #{card_valid}, #{card_month}, #{card_pwd}, #{card_regiNum}, seq_card.nextval , #{card_price}, sysdate)
+		]]>
+	</insert>
+	
+	<select id="selectCardPay" parameterType="String" resultType="card_payDTO">
+		<![CDATA[
+			select * from (select * from card_pay where email = #{card_payDTO.getEmail() } order by card_time desc) where rownum = 1
+		]]>
+		<!-- point_detail: 거래 승인 번호가 최근인 순으로 정렬하는 sql문으로 수정하기 -->
+	</select>
+	
+	<insert id="insertPoint" parameterType="pointDTO">
+		<![CDATA[
+			insert into point values(#{email}, #{point_change}, #{point_rest}, #{point_history}, #{point_detail})
+		]]>
+	</insert>
+	
+	<insert id="insertpayPoint" parameterType="pointDTO">
+		<![CDATA[
+			insert into point(email, point_change, point_rest, point_history, point_detail) 
+			values(#{email}, #{point_change}, #{point_rest}, #{point_history}, point_detail.nextval)
+		]]>
+	</insert>
+	
+	<update id="updateU_point" parameterType="pointDTO">
+		<![CDATA[
+			update user_on set u_point = #{point_rest} where u_email = #{email}
+		]]>
+	</update>
+	
+	<update id="updateC_point" parameterType="pointDTO">
+		<![CDATA[
+			update client_on set c_point = #{point_rest} where c_email = #{email}
+		]]>
+	</update>
+	
+	<select id="selectPointList" parameterType="String" resultMap="pointDTO">
+		<![CDATA[
+			select * from point where email = #{email} order by point_date desc
+		]]>
+	</select>
+	
+	<select id="duplicate_email" parameterType="String" resultType="String">
+		<![CDATA[
+			select decode(count(u_email), 1, 'false', 'true') as result from user_on where u_email = #{input_email }
+		]]>
+	</select>
+	
+	<select id="duplicate_nick" parameterType="String" resultType="String">
+		<![CDATA[
+			select decode(count(u_nick), 1, 'false', 'true') as result from user_on where u_nick = #{input_nick }
+		]]>
+	</select>
+	
+	<select id="selectU_auth" parameterType="String" resultType="String">
+		<![CDATA[
+			select u_auth from user_on where u_email = #{u_email}
+		]]>
+	</select>
+	
+	<update id="updateU_auth" parameterType="String">
+		<![CDATA[
+			update user_on set u_auth = 'Y' where u_email = #{u_email}
+		]]>
+	</update>
+	
+	<!-- <,>,& 등에만 <![CDATA[]]> 로 감싸면 됨. 특수문자를 쿼리문이 아닌 xml 태그로 인식하는 것을 막기 위함 -->
+	<insert id="insertJoinUser" parameterType="user_onDTO">
+		<![CDATA[
+			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_addr} , #{u_lvl}, sysdate, default, null)
+		]]>
+	</insert>
+	
+	<update id="updateModifyUser" parameterType="user_onDTO">
+		<![CDATA[
+			update user_on set u_name = #{u_name}, u_tel = #{u_tel}, u_pwd = #{u_pwd}, u_nick = #{u_nick}, u_lvl = #{u_lvl}, u_addr = #{u_addr} where u_email = #{u_email}
+		]]>
+	</update>
+	
+	<update id="updateModifyClient" parameterType="client_onDTO">
+		<![CDATA[
+			update client_on set c_name = #{c_name}, c_tel = #{c_tel}, c_pwd = #{c_pwd} where c_email = #{c_email}
+		]]>
+	</update>
+	
+	<select id="selectReservCondition" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) result from (select * from reserv where u_email = #{u_email}) where reserv_condition = 'A' OR reserv_condition = 'B'
+		]]>
+	</select>
+	
+	<select id="selectReservCondition_c" parameterType="int" resultType="int">
+		<![CDATA[
+			select count(*) result from (select * from reserv where resto_no = #{resto_no}) where reserv_condition = 'A' OR reserv_condition = 'B'
+		]]>
+	</select>
+	
+	<update id="updateU_authbyC" parameterType="String">
+		<![CDATA[
+			update user_on set u_auth = 'C', offDate = sysdate where u_email = #{u_email}
+		]]>
+	</update>
+	
+	<update id="updateC_authbyC" parameterType="String">
+		<![CDATA[
+			update client_on set c_auth = 'C', offDate = sysdate where c_email = #{c_email}
+		]]>
+	</update>
+	
+	<update id="resetPwd" parameterType="loginDTO">
+		<![CDATA[
+			update user_on set u_pwd = #{pwd} where u_email = #{email}
+		]]>
+	</update>
+	
+	<update id="resetPwd_c" parameterType="loginDTO">
+		<![CDATA[
+			update client_on set c_pwd = #{pwd} where c_email = #{email}
+		]]>
+	</update>
+	
+	<select id="selectResto_no" parameterType="String" resultType="int">
+		<![CDATA[
+			select resto_no from resto where c_email = #{c_email}
+		]]>
+	</select>
+	
+	<select id="selectUpdatedUser" parameterType="String" resultType="user_onDTO">
+		<![CDATA[
+			select * from user_on where u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="selectUpdatedClient" parameterType="String" resultType="client_onDTO">
+		<![CDATA[
+			select * from client_on where c_email=#{c_email}
+		]]>
+	</select>
+	<select id="selectNewE_No" resultType="int">
+		<![CDATA[
+			select max(e_no)+1 from event
+		]]>
+	</select>
+	<select id="selectNewImageFileNo" resultType="int">
+		<![CDATA[
+			select nvl(max(e_imageNo),0) from e_image
+		]]>
+	</select>
+	<insert id="insertNewEvent" parameterType="java.util.Map">
+		<![CDATA[
+			insert into event values(#{e_no}, #{e_title}, default, #{e_content}, null, #{e_start}, #{e_end}, default)
+		]]>
+	</insert>
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="insert all" separator=" " close="select * from dual">
+			into e_image values(#{item.e_imageNo}, #{item.e_image}, default, #{item.e_no})
+		</foreach>
+	</insert>
+	
+	<select id="myComList" resultType="communityDTO">
+		<![CDATA[
+			select * from community where u_email=#{u_email} order by c_writeDate desc
+		]]>
+	</select>	
+	
+	<select id="myReList" resultType="replyDTO">
+		<![CDATA[
+			select * from reply where u_email=#{u_email} order by reply_writeDate desc
+		]]>
+	</select>	
+	
+	<select id="scrapInfo" resultType="com_scrapDTO">
+		select * from com_scrap where u_email=#{u_email}
+	</select>
+	
+	<select id="heartInfo" resultType="com_scrapDTO">
+		select * from com_heart where u_email=#{u_email}
+	</select>
+	
+	<select id="myScrapList" resultType="c_imageDTO">
+		<![CDATA[
+			select i.c_articleNo, i.c_image from com_scrap c, c_image i where c.u_email=#{u_email} and c.c_articleNo=i.c_articleNo order by com_scrap_date desc
+		]]>
+	</select>
+	
+	<select id="myHeartList" resultType="c_imageDTO">
+		<![CDATA[
+			select i.c_articleNo, i.c_image from com_heart c, c_image i where c.u_email=#{u_email} and c.c_articleNo=i.c_articleNo order by com_heart_date desc
+		]]>
+	</select>
+	
+	<select id="myWriteList" resultType="c_imageDTO">
+		<![CDATA[
+			select i.c_articleNo, i.c_image from community c, c_image i where c.u_email=#{u_email} and c.c_articleNo=i.c_articleNo order by c.c_writeDate desc
+		]]>
+	</select>
+	
+	<select id="myIQ" resultType="iq_imageDTO">
+		<![CDATA[
+			select i.iq_no, i.iq_image from inquery iq, iq_image i where iq.u_email=#{u_email} and iq.iq_no=i.iq_no order by iq.iq_writeDate desc
+		]]>
+	</select>
+	
+	<select id="myInqueryList" resultType="inqueryDTO">
+		<![CDATA[
+			select * from inquery where u_email=#{u_email} order by iq_writeDate desc
+		]]>
+	</select>
+	
+	<select id="viewSearchList" parameterType="communityDTO" resultType="communityDTO">
+		<![CDATA[
+			select c.c_articleNo, c.u_email, c.c_writeDate, u.u_nick, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt, i.c_image from community c, user_on u, c_image i where c.u_email=u.u_email and c.c_articleNo=i.c_articleNo
+		]]>
+		<choose>
+			<when test=" search_type != null and search_type == 'c_title' and c_category == 'all' ">
+				and c.c_title like '%'||#{keyword}||'%' 
+			</when>
+			<when test=" search_type != null and search_type == 'u_nick' and c_category == 'all' ">
+				and u.u_nick like '%'||#{keyword}||'%'
+			</when>
+			
+			<when test=" search_type != null and search_type == 'c_title' and c_category == 'recipe' ">
+				and c.c_title like '%'||#{keyword}||'%' and c.c_category=#{c_category}
+			</when>
+			<when test=" search_type != null and search_type == 'u_nick' and c_category == 'recipe' ">
+				and u.u_nick like '%'||#{keyword}||'%'	and c.c_category=#{c_category}
+			</when>
+			
+			<when test=" search_type != null and search_type == 'c_title' and c_category == 'vegan life' ">
+				and c.c_title like '%'||#{keyword}||'%' and c.c_category='vegan life'
+			</when>
+			<when test=" search_type != null and search_type == 'u_nick' and c_category == 'vegan life' ">
+				and u.u_nick like '%'||#{keyword}||'%' and c.c_category='vegan life'
+			</when>
+			
+			
+		</choose>
+	</select>
+	
+	<select id="viewInqueryList" parameterType="inqueryDTO" resultType="inqueryDTO">
+		<![CDATA[
+			select i.iq_no, i.u_email, i.iq_writeDate, i.iq_title from inquery i, user_on u where i.u_email=u.u_email
+		]]>
+		<choose>
+			<when test=" search_type != null and search_type == 'iq_title' ">
+				and i.iq_title like '%'||#{keyword}||'%'
+			</when>
+			<when test=" search_type != null and search_type == 'u_email' ">
+				and i.u_email like '%'||#{keyword}||'%'
+			</when>
+		</choose>
+	</select>
+	
+	<insert id="reply" parameterType="java.util.Map">
+		<![CDATA[
+			insert into iq_reply values(iq_reply_no_seq.nextval, #{reply_iq_no}, #{iq_reply_content}, default, #{iq_u_email})
+		]]>
+	</insert>
+</mapper>

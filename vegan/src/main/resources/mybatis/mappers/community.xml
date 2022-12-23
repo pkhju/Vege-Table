@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.community">
+
+  	<resultMap type="communityDTO" id="communityResult">
+  		<result property="c_articleNo" column="c_articleNo" />
+		<result property="c_category" column="c_category" />
+		<result property="u_email" column="u_email" />
+		<result property="c_title" column="c_title" />
+		<result property="c_writeDate" column="c_writeDate" />
+		<result property="c_content" column="c_content" />
+		<result property="c_image" column="c_image" />
+		<result property="c_views" column="c_views" />
+		<result property="c_scraps" column="c_scraps" />
+		<result property="c_show" column="c_show"/>
+		<result property="u_nick" column="u_nick"/>
+		<result property="search_type" column="search_type"/>
+		<result property="keyword" column="keyword"/>
+		<result property="heart" column="heart"/>
+		<result property="reply_cnt" column="reply_cnt"/>
+	</resultMap> 
+	
+	<resultMap type="EventDTO" id="eventResult">
+  		<result property="e_no" column="e_no" />
+		<result property="u_nick" column="u_nick" />
+		<result property="e_title" column="e_title" />
+		<result property="e_date" column="e_date" />
+		<result property="e_content" column="e_content" />
+		<result property="e_image" column="e_image" />
+		<result property="e_start" column="e_start" />
+		<result property="e_end" column="e_end" />
+		<result property="e_show" column="e_show"/>
+	</resultMap> 
+	
+	<resultMap type="replyDTO" id="replyResult">
+		<result property="u_nick" column="u_nick"/>
+		<result property="reply_no" column="reply_no"/>
+		<result property="c_articleNo" column="c_articleNo"/>
+		<result property="reply_content" column="reply_content"/>
+		<result property="reply_writeDate" column="reply_writeDate"/>
+		<result property="u_email" column="u_email"/>
+		<result property="show" column="show"/>
+	</resultMap>
+	
+	<resultMap type="c_imageDTO" id="c_imageResult">
+		<result property="c_imageNo" column="c_imageNo"/>
+		<result property="c_image" column="c_image"/>
+		<result property="regDate" column="regDate"/>
+		<result property="c_articleNo" column="c_articleNo"/>
+		
+	</resultMap>
+	
+	<resultMap type="e_imageDTO" id="e_imageResult">
+		<result property="e_imageNo" column="e_imageNo"/>
+		<result property="e_image" column="e_image"/>
+		<result property="regDate" column="regDate"/>
+		<result property="e_no" column="e_no"/>
+		
+	</resultMap>
+	
+	<resultMap type="com_scrapDTO" id="com_scrapResult">
+		<result property="u_email" column="u_email"/>
+		<result property="c_articleNo" column="c_articleNo"/>
+		<result property="coom_scrap_date" column="com_scrap_date"/>
+		<result property="show" column="show"/>
+		
+		
+	</resultMap>
+	
+	<select id="selectImageFileList1" parameterType="int" resultMap="c_imageResult">
+		<![CDATA[
+			select * from c_image where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	
+	<select id="selectNewArticleNo" resultType="int">
+		<![CDATA[
+			select max(c_articleNo)+1 from community
+		]]>
+	</select>
+	<select id="selectNewImageFileNo" resultType="int">
+		<![CDATA[
+			select nvl(max(c_imageNo),0) from c_image
+		]]>
+	</select>
+	<insert id="insertNewArticle" parameterType="java.util.Map">
+		<![CDATA[
+			insert into community values(#{c_articleNo}, #{c_category}, #{u_email}, #{c_title}, default, #{c_content }, null, default, default, default, default, default, default, default)
+		]]>
+	</insert>
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="insert all" separator=" " close="select * from dual">
+			into c_image values(#{item.c_imageNo}, #{item.c_image}, default, #{item.c_articleNo})
+		</foreach>
+	</insert>
+	
+	<select id="community1" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c where u.u_email=c.u_email and c.c_category='recipe' order by c.heart desc
+		]]>
+	</select>
+	
+	
+	
+	<select id="community1Image" resultMap="c_imageResult">
+		<![CDATA[
+			select i.c_articleNo, i.c_imageNo, i.c_image from community c, c_image i where c.c_articleNo=i.c_articleNo
+		]]>
+	</select>
+	
+	<select id="community2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c where u.u_email=c.u_email and c.c_category='vegan life' order by c.heart desc
+		]]>
+	</select>
+	
+	
+	
+	<select id="eventBanner" resultMap="eventResult">
+		<![CDATA[
+			select e.e_no, u.u_nick, e.e_title, e.e_date, e.e_content, i.e_image, e.e_start, e.e_end, e.e_show 
+from user_on u, event e, e_image i where u.u_email='a1@a1' and e.e_no=i.e_no order by e.e_date desc
+		]]>
+	</select>
+	<!-- <select id="eventImage" resultMap="e_imageResult">
+		<![CDATA[
+			select i.e_image, i.e_no from e_image i, event e where e.e_no=i.e_no
+		]]>
+	</select> -->
+	
+	<select id="viewArticle" resultType="communityDTO">
+		<![CDATA[
+			select c.c_articleNo, c.u_email, c.c_writeDate, u.u_nick, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt from user_on u, community c
+where u.u_email=c.u_email and c.c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	
+	<insert id="comment">
+		<![CDATA[		
+			insert into reply values(reply_seq.nextval, #{c_articleNo}, #{reply_content}, default, #{u_email}, default)
+		]]>
+	</insert>
+	
+	<update id="commentCnt">
+		<![CDATA[
+			update community set reply_cnt=reply_cnt+1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<select id="commentList" resultType="replyDTO">
+		<![CDATA[
+			select r.reply_no, r.u_email, u.u_nick, r.reply_content, r.reply_writeDate from reply r join user_on u on r.u_email=u.u_email where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	
+	
+	
+	<update id="increaseViews" parameterType="int">
+		<![CDATA[
+			update community set c_views=c_views+1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<select id="selectNewIq_No" resultType="int">
+		<![CDATA[
+			select max(iq_no)+1 from inquery
+		]]>
+	</select>
+	<select id="selectNewImageFileNo2" resultType="int">
+		<![CDATA[
+			select nvl(max(iq_imageNo),0) from iq_image
+		]]>
+	</select>
+	<insert id="inquery" parameterType="java.util.Map">
+		<![CDATA[
+			insert into inquery values(#{iq_no}, #{u_email}, #{iq_title}, default, #{iq_content}, null, default, default)
+		]]>
+	</insert>
+	<insert id="insertNewImage2" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="insert all" separator=" " close="select * from dual">
+			into iq_image values(#{item.iq_imageNo}, #{item.iq_image}, default, #{item.iq_no})
+		</foreach>
+	</insert>
+	
+	
+	
+	<select id="selectImageFileList2" parameterType="int" resultType="iq_imageDTO">
+		<![CDATA[
+			select * from iq_image where iq_no=#{iq_no}
+		]]>
+	</select>
+	<select id="viewInquery" resultType="inqueryDTO">
+		<![CDATA[
+			select i.iq_no, i.u_email, i.iq_writeDate, i.iq_title, i.iq_content from inquery i, user_on u
+where i.u_email=u.u_email and i.iq_no=#{iq_no}
+		]]>
+	</select>
+	
+	<delete id="deleteAllComment" parameterType="int">
+		<![CDATA[
+			delete from reply where c_articleNo=#{c_articleNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteC_image" parameterType="int">
+		<![CDATA[
+			delete from c_image where c_articleNo=#{c_articleNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteArticle" parameterType="int">
+		<![CDATA[
+			delete from community where c_articleNo=#{c_articleNo}
+		]]>
+	</delete>
+	
+	<delete id="deleteReply" parameterType="int">
+		<![CDATA[
+			delete from reply where reply_no=#{reply_no}
+		]]>
+	</delete>
+	
+	<select id="eventDate" resultMap="eventResult">
+		<![CDATA[
+			select * from event
+		]]>
+	</select>
+	
+	<update id="eventUpdate" parameterType="java.util.Map">
+		<![CDATA[
+			update event set e_title = #{e_title}||' [종료]' where e_no=#{e_no}
+		]]>
+	</update>
+	
+	<select id="replyInquery" parameterType="int" resultType="iq_replyDTO">
+		<![CDATA[
+			select r.iq_reply_no, r.reply_iq_no, r.iq_reply_content, r.iq_reply_writeDate, r.iq_u_email from iq_reply r, inquery i where r.reply_iq_no=i.iq_no and r.reply_iq_no=#{iq_no}
+		]]>
+	</select>
+	
+	<select id="selectImageFileList3" parameterType="int" resultMap="e_imageResult">
+		<![CDATA[
+			select * from e_image where e_no=#{e_no}
+		]]>
+	</select>
+	
+	<select id="viewEvent" resultType="eventDTO">
+		<![CDATA[
+			select e_no, e_date, e_title, e_content, e_start, e_end from event where e_no=#{e_no}
+		]]>
+	</select>
+	
+	<select id="recipeMore" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c where u.u_email=c.u_email and c.c_category='recipe' order by c.c_writeDate desc
+		]]>
+	</select>
+	
+	<select id="img" resultMap="c_imageResult">
+		<![CDATA[
+			select i.c_image, i.c_articleNo, c.c_articleNo from c_image i, community c where i.c_articleNo=c.c_articleNo 
+		]]>
+	</select>
+	
+	<select id="writeFilter" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='recipe' and c.c_articleNo=i.c_articleNo order by c.c_writeDate desc
+		]]>
+	</select>
+	<select id="viewsFilter" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='recipe' and c.c_articleNo=i.c_articleNo order by c.c_views desc
+		]]>
+	</select>
+	<select id="scrapsFilter" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='recipe' and c.c_articleNo=i.c_articleNo order by c.c_scraps desc
+		]]>
+	</select>
+	<select id="heartFilter" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='recipe' and c.c_articleNo=i.c_articleNo order by c.heart desc
+		]]>
+	</select>
+	<select id="reply_cntFilter" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='recipe' and c.c_articleNo=i.c_articleNo order by c.reply_cnt desc
+		]]>
+	</select>
+	
+	<select id="veganLifeMore" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c where u.u_email=c.u_email and c.c_category='vegan life' order by c.c_writeDate desc
+		]]>
+	</select>
+	
+	<select id="writeFilter2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='vegan life' and c.c_articleNo=i.c_articleNo order by c.c_writeDate desc
+		]]>
+	</select>
+	<select id="viewsFilter2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='vegan life' and c.c_articleNo=i.c_articleNo order by c.c_views desc
+		]]>
+	</select>
+	<select id="scrapsFilter2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='vegan life' and c.c_articleNo=i.c_articleNo order by c.c_scraps desc
+		]]>
+	</select>
+	<select id="heartFilter2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='vegan life' and c.c_articleNo=i.c_articleNo order by c.heart desc
+		]]>
+	</select>
+	<select id="reply_cntFilter2" resultMap="communityResult">
+		<![CDATA[
+			select c.c_articleNo, u.u_nick, c.c_writeDate, c.c_category, c.c_title, c.c_content, i.c_image, c.c_views, c.c_scraps, c.heart, c.reply_cnt 
+from user_on u, community c, c_image i where u.u_email=c.u_email and c.c_category='vegan life' and c.c_articleNo=i.c_articleNo order by c.reply_cnt desc
+		]]>
+	</select>
+	
+	<update id="heartPlus" parameterType="java.util.Map">
+		<![CDATA[
+			update community set heart=heart+1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<update id="heartMinus" parameterType="int">
+		<![CDATA[
+			update community set heart=heart-1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<insert id="heart" parameterType="java.util.Map">
+		<![CDATA[
+			insert into com_heart values(#{u_email}, #{c_articleNo}, default, default)
+		]]>
+	</insert>
+	
+	<delete id="heartCancel" parameterType="int">
+		delete from com_heart where c_articleNo=#{c_articleNo}
+	</delete>
+	
+	<update id="scrapPlus" parameterType="java.util.Map">
+		<![CDATA[
+			update community set c_scraps=c_scraps+1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<update id="scrapMinus" parameterType="int">
+		<![CDATA[
+			update community set c_scraps=c_scraps-1 where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<insert id="scrap" parameterType="java.util.Map">
+		<![CDATA[
+			insert into com_scrap values(#{u_email}, #{c_articleNo}, default, default)
+		]]>
+	</insert>
+	
+	<delete id="scrapCancel" parameterType="int">
+	<![CDATA[
+		delete from com_scrap where c_articleNo=#{c_articleNo}
+		]]>
+	</delete>
+	
+	<update id="modArticle" parameterType="java.util.Map">
+		<![CDATA[
+			update community set c_title=#{c_title}, c_content=#{c_content} where c_articleNo=#{c_articleNo}
+		]]>
+	</update>
+	
+	<select id="upScrapCnt" parameterType="java.util.Map" resultType="int">
+		<![CDATA[
+			select c_scraps from community where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	<select id="downScrapCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select c_scraps from community where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	
+	<select id="upHeartCnt" parameterType="java.util.Map" resultType="int">
+		<![CDATA[
+			select heart from community where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	<select id="downHeartCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select heart from community where c_articleNo=#{c_articleNo}
+		]]>
+	</select>
+	
+	
+	
+</mapper>

@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.container {
+    border: 1px solid #777;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+
+.imgContainer {
+    border-radius: 10px;
+    height: 300px;
+    margin: 10px auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.icon {
+    width:30px;
+   /* display: inline-block; */
+}
+
+.contentBox {
+    margin: 10px auto;
+    min-height : 50px;
+}
+
+img {
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.feedConatiner {
+    width : 100vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+
+.writer, .reply {
+    font-size: 15px;
+    line-height: normal;
+}
+
+.heartForm,
+.scrapForm {
+	display:inline;
+}

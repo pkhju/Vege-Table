@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+.detailTop {
+    /* border: 1px solid black; */
+    height:100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home, .menu, .photo, .review {
+/* 다 만들고 height값 빼야함 */
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+.home {
+    background-color: cornflowerblue;
+}
+
+
+.btnChange {
+    width:400px;
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    padding:10px;
+    border-radius: 10px;
+}
+
+img {
+    width:10rem;
+    height:10rem;
+    object-fit: cover;
+    margin:5px;
+
+}
+
+.img {
+    width: 50vw;
+    margin: 0 auto;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap; /* 한 줄에 가득차면 다음 줄로 넘어감 */
+}
+
+#review {
+    border:1px solid #999;
+}
+
+.fLeft {
+    float : left;
+    width : 45%;
+    margin-left: 20px;
+}
+
+.reviewTitle {
+    text-decoration: none;
+    color : black;
+}
+
+/* .btnReserv {
+    position:sticky;
+    top:0;
+    background-color: white;
+} */
+
+.img > a {
+    border:1px solid #999;
+}
+
+.img > img {
+    max-width: 80px;
+}

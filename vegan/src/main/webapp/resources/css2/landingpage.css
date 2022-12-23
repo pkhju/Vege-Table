@@ -1,0 +1,55 @@
+
+       @charset "UTF-8";
+        
+        .nav {
+        display: flex;
+        }
+  
+        .wrap {
+          display: flex;
+          text-align: center;
+          /* align-items: center; */
+          flex-grow:1;
+        }
+
+        .wrap-item {
+            min-width : 100px;
+            text-align: center;
+            margin : 10px;
+            flex-grow:1;
+        }
+
+        .nav {
+          left : 0;
+          right : 0;
+          margin : 0 auto;
+        }
+        
+        .card {
+            width:100px;
+        }
+
+        .slide {
+            text-align: center;
+            margin:0 auto;
+        }
+
+        .between {  /* content 사이 간격 */
+            height : 30px;
+        }
+        
+        a {
+          text-decoration: none;
+        }
+
+        .carousel, .carousel-inner {
+          vertical-align: middle;
+          height: 200px;
+        }
+
+
+
+        img {
+          text-align: center;
+          object-fit: cover;
+        }

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.resto">
+	<resultMap type="restoDTO" id="restoResult">
+		<result property="vegan" column="vegan" />
+		<result property="c_email" column="c_email" />
+		<result property="resto_name" column="resto_name" />
+		<result property="resto_addr" column="resto_addr" />
+		<result property="resto_tel" column="resto_tel" />
+		<result property="resto_time" column="resto_time" />
+		<result property="resto_break" column="resto_break" />
+		<result property="resto_detail" column="resto_detail" />
+		<result property="imageFileName" column="imageFileName" />
+		<result property="avg_rate" column="avg_rate" />
+		<result property="resto_no" column="resto_no" />
+		<result property="deposit" column="deposit" />
+		<result property="resto_info" column="resto_info" />
+		<result property="regDate" column="regDate" />
+		<result property="selectSearch" column="selectSearch" />
+		<result property="keyword" column="keyword" />		
+	</resultMap>
+	
+	<resultMap type="resto_ImageDTO" id="resto_imageResult">
+		<result property="imageFileNo" column="imageFileNo" />
+		<result property="imageFileName" column="imagefileName" />
+		<result property="regDate" column="regDate" />
+		<result property="resto_no" column="resto_no" />
+	</resultMap>
+	
+	<resultMap type="reviewDTO" id="reviewResult">
+		<result property="resto_no" column="resto_no" />
+		<result property="u_nick" column="u_nick" />
+		<result property="review_content" column="review_content" />
+		<result property="review_date" column="review_date" />
+		<result property="imageFileName" column="imageFileName" />
+		<result property="rate" column="rate" />
+		<result property="show" column="show" />
+		<result property="del" column="del" />
+		<result property="review_no" column="review_no" />
+	</resultMap>
+	
+	<select id="selectRestoList" resultMap="restoResult">
+		<![CDATA[
+			select decode(vegan,'Y','비건음식만','논비건음식포함'), c_email,resto_name, resto_addr, resto_tel, 
+			substr(resto_time,1,4)||'-'||substr(resto_time,5,8) as resto_time, substr(resto_break,1,4)||'-'||substr(resto_break,5,8) as resto_break, 
+			resto_detail, imagefilename, avg_rate, resto_no, deposit, resto_info from resto order by regDate desc
+		]]>
+	</select>
+	
+	<select id="restoDetail" parameterType="int" resultType="restoDTO">
+		<![CDATA[
+			select case vegan when 'Y' then '비건음식만' else '논비건음식포함' end as vegan, c_email,resto_name, resto_addr, resto_tel, 
+			substr(resto_time,1,4)||'-'||substr(resto_time,5,8) as resto_time, substr(resto_break,1,4)||'-'||substr(resto_break,5,8) as resto_break, 
+			resto_detail, imagefilename, avg_rate, resto_no, deposit, resto_info from resto where resto_no=#{resto_no}
+		]]>
+<!-- 		to_char(avg_rate,'0.0') as  -->
+	</select>
+	
+	<update id="modResto" parameterType="java.util.Map">
+		<![CDATA[
+			update resto set vegan=#{vegan}, resto_name=#{resto_name}, resto_addr=#{resto_addr}, resto_tel=#{resto_tel}, 
+			resto_time=#{resto_time}, resto_break=#{resto_break}, resto_detail=#{resto_detail}, deposit=#{deposit},
+			resto_info=#{resto_info} where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<update id="maintainVegan" parameterType="java.util.Map">
+		<![CDATA[
+			update resto set resto_name=#{resto_name}, resto_addr=#{resto_addr}, resto_tel=#{resto_tel}, 
+			resto_time=#{resto_time}, resto_break=#{resto_break}, resto_detail=#{resto_detail}, deposit=#{deposit},
+			resto_info=#{resto_info} where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<select id="restoInfo" parameterType="int" resultType="restoDTO">
+		<![CDATA[
+			select case vegan when 'Y' then '비건음식만' else '논비건음식포함' end as vegan, c_email,resto_name, resto_addr, resto_tel, 
+			resto_time, resto_break, resto_detail, imagefilename, avg_rate, 
+			resto_no, deposit, resto_info from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<insert id="addNewResto" parameterType="java.util.Map">
+		<![CDATA[ 
+			insert into resto(vegan, c_email, resto_name, resto_addr, resto_tel, resto_time, resto_break, resto_detail, resto_no, imageFileName, deposit, resto_info)
+				values(#{vegan}, #{c_email}, #{resto_name}, #{resto_addr}, #{resto_tel}, #{resto_time}, #{resto_break}, #{resto_detail}, #{resto_no}, null, #{deposit}, #{resto_info})
+		]]>
+	</insert>
+	
+	<select id="selectNewResto_no" resultType="int">
+		<![CDATA[
+			select max(resto_no)+1 from resto
+		]]>
+	</select>
+	
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="insert all" separator=" " close="select * from dual">
+			into resto_image values(#{item.imageFileNo}, #{item.imageFileName}, sysdate, #{item.resto_no})
+		</foreach>
+	</insert>
+	
+	<insert id="addNewImage" parameterType="java.util.Map">
+		<foreach collection="list" item="item" open="insert all" separator=" " close="select * from dual">
+			into resto_image values(#{item.imageFileNo}, #{item.imageFileName}, sysdate, #{item.resto_no})
+		</foreach>
+	</insert>
+	
+	<update id="resto_image" parameterType="java.util.Map">
+		<![CDATA[
+			update resto set imageFileName=#{imageFileName} where resto_no=#{resto_no} and rownum=1
+		]]>
+	</update>
+	
+	<select id="imageFileNo" parameterType="int" resultType="int">
+		<![CDATA[
+			select max(substr(imageFileNo,-1,1)) from resto_image where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="selectReviewList" resultMap="reviewResult">
+		<![CDATA[
+			select * from review where resto_no=#{resto_no} order by review_date desc			
+		]]>
+<!-- 		select * from review where show='y' and del='n' order by review_date desc -->
+	</select>
+	
+	<update id="review_image" parameterType="java.util.Map">
+		<![CDATA[
+			update review set imageFileName=#{imageFileName} where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<insert id="addNewReview" parameterType="java.util.Map">
+		<![CDATA[
+			insert into review(resto_no, u_nick, review_content, imageFileName, rate, review_no)
+			values(#{resto_no}, #{u_nick}, #{review_content}, #{imageFileName, jdbcType=VARCHAR}, #{rate}, #{review_no})
+		]]>
+	</insert>
+	
+	<select id="count" resultType="int">
+		<![CDATA[
+			select count(*) from review
+		]]>
+	</select>
+	
+	<select id="selectImageList" parameterType="int" resultMap="resto_imageResult">
+		<![CDATA[
+			select * from resto_image where resto_no=#{resto_no} order by imageFileNo asc
+		]]>
+	</select>
+	
+	<update id="removeReview" parameterType="java.util.Map">
+		<![CDATA[
+			update review set del='y' where review_no=#{review_no}
+		]]>
+	</update>
+	
+	<update id="showReview" parameterType="java.util.Map">
+		<![CDATA[
+			update review set show='y' where review_no=#{review_no}
+		]]>
+	</update>
+	
+	<update id="hideReview" parameterType="java.util.Map">
+		<![CDATA[
+			update review set show='n' where review_no=#{review_no}
+		]]>
+	</update>
+	
+	<update id="modReview" parameterType="java.util.Map">
+		<![CDATA[
+			update review set review_content=#{review_content}, imageFileName=#{imageFileName, jdbcType=VARCHAR}, rate=#{rate} where review_no=#{review_no}
+		]]>
+	</update>
+	
+	<select id="selectOriginalFileName" parameterType="int" resultType="String">
+		<![CDATA[
+			select imageFileName from resto_image where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="getReviewImageFileName" parameterType="int" resultType="String">
+		<![CDATA[
+			select imageFileName from review where review_no=#{review_no}
+		]]>
+	</select>
+	
+	<select id="avg_rate" parameterType="restoDTO" resultType="String">
+		<![CDATA[
+			select SUM(rate)/count(*) as avg_rate from review where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<update id="setAvg_rate" parameterType="restoDTO">
+		<![CDATA[
+			update resto set avg_rate=#{avg_rate} where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<delete id="removeImage" parameterType="String">
+	<![CDATA[
+			delete from resto_image where imageFileNo=#{imageFileNo}
+		]]>
+	</delete>
+	
+	<select id="getImageFileName" parameterType="String" resultType="String">
+		<![CDATA[
+			select imageFileName from resto_image where imageFileNo=#{imageFileNo}
+		]]>
+	</select>
+	
+	<select id="getMainImage" parameterType="int" resultType="String">
+		<![CDATA[
+			select imageFileName from resto_image where resto_no=#{resto_no} and rownum=1 order by imageFileNo asc
+		]]>
+	</select>
+	
+	<update id="updateMainImage" parameterType="java.util.Map">
+		<![CDATA[
+			update resto set imageFileName=#{imageFileName} where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<update id="nullImage" parameterType="int">
+		<![CDATA[
+			update resto set imageFileName=null where resto_no=#{resto_no}
+		]]>
+	</update>
+	
+	<select id="mainImage" parameterType="int" resultType="String">
+		<![CDATA[
+			select imageFileName from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="searchResto" parameterType="restoDTO" resultMap="restoResult">
+		<![CDATA[
+			select decode(vegan,'Y','비건음식만','논비건음식포함'), c_email,resto_name, resto_addr, resto_tel, 
+			substr(resto_time,1,4)||'-'||substr(resto_time,5,8) as resto_time, substr(resto_break,1,4)||'-'||substr(resto_break,5,8) as resto_break, 
+			resto_detail, imagefilename, avg_rate, resto_no, deposit, resto_info from resto where 
+			resto_name like '%'||#{keyword}||'%'
+			or resto_addr like '%'||#{keyword}||'%' order by regDate desc 
+		]]>
+	</select>
+	
+	<select id="getRestoDetail" parameterType="int" resultMap="restoResult">
+		<![CDATA[
+			select resto_name, resto_addr, resto_tel, substr(resto_time,1,4)||'-'||substr(resto_time,5,8) as resto_time, 
+			substr(resto_break,1,4)||'-'||substr(resto_break,5,8) as resto_break, imagefilename, resto_no, deposit from resto where resto_no=#{resto_no}
+		]]>	
+	</select>
+	
+	<select id="startTime" parameterType="int" resultType="String">
+		<![CDATA[
+			select substr(resto_time,1,4) from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="endTime" parameterType="int" resultType="String">
+		<![CDATA[
+			select substr(resto_time,5,4) from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="breakStart" parameterType="int" resultType="String">
+		<![CDATA[
+			select substr(resto_break,1,4) from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="breakEnd" parameterType="int" resultType="String">
+		<![CDATA[
+			select substr(resto_break,5,4) from resto where resto_no=#{resto_no}
+		]]>
+	</select>
+	
+	<select id="getReview" parameterType="int" resultType="reviewDTO">
+		<![CDATA[
+			select * from review where review_no=#{review_no}
+		]]>
+	</select>
+	
+	<select id="restoExist" parameterType="string" resultType="restoDTO">
+		<![CDATA[
+			select * from resto where c_email=#{c_email}
+		]]>
+	</select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="side" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+	
+	<definition name="/resto/restoList" extends="baseLayout">
+		<put-attribute name="title" value="식당목록" />
+		<put-attribute name="body" value="/WEB-INF/views/resto/restoList.jsp" />
+	</definition>
+	
+	<definition name="/resto/restoDetail" extends="baseLayout">
+		<put-attribute name="title" value="식당정보" />
+		<put-attribute name="body" value="/WEB-INF/views/resto/restoDetail.jsp" />
+	</definition>
+	
+	<definition name="/resto/addRestoForm" template="/WEB-INF/views/resto/addRestoForm.jsp" />
+	
+	<definition name="/resto/modRestoForm" template="/WEB-INF/views/resto/modRestoForm.jsp" />
+	
+	<definition name="/resto/addReviewForm" template="/WEB-INF/views/resto/addReviewForm.jsp" />
+	
+	<definition name="/resto/modReviewForm" template="/WEB-INF/views/resto/modReviewForm.jsp" />
+	
+</tiles-definitions>

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+.loginBox {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 300px;
+} 
+.aTag {
+    text-decoration: none;
+    color : #333;
+}
+.loginBtn {
+    margin-bottom: 7px;
+}
+.box_search {
+    width: 409px;
+    height: 500px;
+    background-color: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 2px 3px 7px #999;
+    border-radius: 10px;
+}
+.inner_search {
+    width: 72%;
+    margin: 20% auto;
+}
+.btn_exit {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.btn_exit:hover {
+    cursor: pointer;
+}
+.btn_txt {
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    color : #333;
+}
+.section-logo {
+	text-align: center;
+}
+.setion_btns {
+	text-align: center;
+}
+.setion_btns > span {
+	width: 30% !important;
+	display: inline-block;
+	font-size: 14px;
+}
+.checkbox {
+	text-align: center;
+	margin-top: 1em;
+}
+

@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+.main-background {
+    width : 100%;
+    height : 300px;
+    background-image: url(../img/vegan.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-attachment: fixed; */
+    /* filter : brightness(70%); */
+    padding: 1px;    /* margin-collapse 현상 막기 */
+    text-align: center;
+    position: relative;
+}
+
+.main-title {
+    color : white;
+    font-size: 40px;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.main-content {
+    display:inline; 
+    font-size: 16px;
+    color : white;
+}
+
+.main-content a {
+    display:inline;
+    font-size: 16px;
+    text-decoration:none;   /* a태그 밑줄 제거 */
+    color : white;
+} 
+
+.main-button {
+    padding:15px;
+    font-size: 20px;
+    background-color: white;
+    border : none;
+    border-radius: 5px;
+    position : absolute;    /* position 부여하면 1. 좌표이동가능 2. 공중에 뜸 */
+                            /* position : static = 움직이지마셈, fixed = 현재 화면이 기준(화면에 달라붙는 기능 구현가능) 
+                                        absolute = 부모태그(position:relative가 있는)가 기준, relative = 현재위치기준*/
+    left : 0;
+    right : 0;
+    margin :auto;
+    width:100px;
+}
+
+.main-menu {
+    height:80px;
+    border: 1px solid black;
+}
+
+ul {
+    width:500px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+li {
+    width : 300px;
+}
+
+.menu-item {
+    text-align: center;
+    display: inline;
+    outline: 1px solid red;
+    margin-left: 30px;
+}
+
+.text-content {
+    font-size: 1.2rem;
+    padding : 20px;
+    text-align: center;
+    background-color: grey;
+    width : 80%;
+    max-width: 600px;   /* content 영역 사이즈. 반응형 레이아웃 max, min */
+    left : 0;
+    right : 0;
+    margin : auto;
+    position :relative;
+    top : -50px;
+    z-index: 5; /* z-index가 높을수록(정수) 위로 옴 */
+    box-sizing: border-box; /* 실제 보이는 영역 사이즈 / content-box : 내용영역 */
+}
+
+input[type=text]{
+    padding:10px;
+    font-size: 20px;
+    border : 1px solid black;
+    border-radius: 5px;
+}
+
+.nav-container {
+    height: 100px;
+    line-height: 100px;
+    position: relative;
+}
+
+.nav-item{
+    float: right;
+    margin-right: 10px;
+    height: auto;
+}
+.logoImg {
+    height: 70%;
+    width:250px;
+}
+
+.logoDiv {
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.nav {
+    display: flex;
+}
+
+.wrap {
+    display: flex;
+    text-align: center;
+    /* align-items: center; */
+    flex-grow:1;
+}
+
+.wrap-item {
+    text-align: center;
+    margin : 10px;
+    flex-grow:1;
+}
+
+.aTag {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.search {
+    width : 500px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input[type=text]{
+    padding:10px;
+    font-size: 20px;
+    border : 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+}

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="baseLayout"
+		template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="side" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+
+	<definition name="/member/admin/listMemberInfo"
+		template="/WEB-INF/views/member/admin/listMemberInfo.jsp" />
+
+	<definition name="/member/chargePoint"
+		template="/WEB-INF/views/member/chargePoint.jsp" />
+
+	<definition name="/member/joinForm_c"
+		template="/WEB-INF/views/member/joinForm_c.jsp" />
+
+	<definition name="/member/joinForm"
+		template="/WEB-INF/views/member/joinForm.jsp" />
+
+	<definition name="/member/loginForm"
+		template="/WEB-INF/views/member/loginForm.jsp" />
+
+	<definition name="/member/main" extends="baseLayout">
+		<put-attribute name="title" value="Vege-Table - 홈" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/main.jsp" />
+	</definition>
+
+	<definition name="/member/mypage_info_c"
+		template="/WEB-INF/views/member/mypage_info_c.jsp" />
+
+	<definition name="/member/mypage_info_u"
+		template="/WEB-INF/views/member/mypage_info_u.jsp" />
+
+	<definition name="/member/mypage_main" extends="baseLayout">
+		<put-attribute name="title" value="Vege-Table - 마이페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/mypage_main.jsp" />
+	</definition>
+
+	<definition name="/member/mypoint_list" extends="baseLayout">
+		<put-attribute name="title"
+			value="Vege-Table - 포인트 사용내역" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/mypoint_list.jsp" />
+	</definition>
+
+	<definition name="/member/proc" extends="baseLayout">
+		<put-attribute name="title" value="Vege-Table" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/proc.jsp" />
+	</definition>
+
+	<definition name="/member/resetPwd"
+		template="/WEB-INF/views/member/resetPwd.jsp" />
+
+	<definition name="/member/searchLoginInfo"
+		extends="baseLayout">
+		<put-attribute name="title" value="Vege-Table - 비밀번호 찾기" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/searchLoginInfo.jsp" />
+	</definition>
+
+	<definition name="/member/adminMain" extends="baseLayout">
+		<put-attribute name="title" value="관리자메인창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/adminMain.jsp" />
+	</definition>
+	
+	<definition name="/member/eventForm" extends="baseLayout">
+		<put-attribute name="title" value="이벤트등록창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/eventForm.jsp" />
+	</definition>
+	
+	<definition name="/member/myWriteList" extends="baseLayout">
+		<put-attribute name="title" value="내작성글창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/myWriteList.jsp" />
+	</definition>
+	
+	<definition name="/member/myScrapList" extends="baseLayout">
+		<put-attribute name="title" value="내스크랩창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/myScrapList.jsp" />
+	</definition>
+	
+	<definition name="/member/myInqueryList"
+		extends="baseLayout">
+		<put-attribute name="title" value="내문의창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/myInqueryList.jsp" />
+	</definition>
+	
+	<definition name="/member/writeListSearch"
+		extends="baseLayout">
+		<put-attribute name="title" value="유저작성글검색창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/writeListSearch.jsp" />
+	</definition>
+	
+	<definition name="/member/inqueryList" extends="baseLayout">
+		<put-attribute name="title" value="고객문의창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/member/inqueryList.jsp" />
+	</definition>
+
+</tiles-definitions>

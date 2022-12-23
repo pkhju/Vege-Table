@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+.detailContainer {
+    border:2px solid #CBD1D7;
+    height: 900px;
+    width:600px;
+    border-radius:10px;
+    display: block;
+    margin: 50px auto;
+}
+
+.detailTop {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.main-background {
+    width : 90%;
+    height : 100px;
+    background-image: url(../img/vegan.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-attachment: fixed; */
+    /* filter : brightness(70%); */
+    padding: 1px;    /* margin-collapse 현상 막기 */
+    text-align: center;
+    display: block;
+    margin: 30px auto;
+    border-radius: 10px;
+}
+
+.fLeft {
+    margin-top: 20px;
+}
+
+.infoLeft {
+    float:left;
+    width : 250px;
+    color: #777;
+}
+
+.infoRight {
+    float:left;
+    width : 250px;
+}
+
+p {
+    margin-top: 50px;
+    line-height: 150%; 
+}
+
+.reservInfo {
+    margin-left: 50px;
+}
+
+.detailInfo {
+    clear: both;
+    margin-top: 200px;
+    margin-left: 50px;
+}
+
+.detail {
+    margin-top:20px;
+}
+
+strong {
+    margin-top: 20px;
+}
+
+.para {
+    color:#777;
+}

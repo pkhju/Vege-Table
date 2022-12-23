@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+	
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+	
+<!-- 	<definition name="main" extends="baseLayout"> -->
+<!-- 		<put-attribute name="title" value="커뮤창" /> -->
+<!-- 		<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="/main" extends="baseLayout"> -->
+<!-- 		<put-attribute name="title" value="커뮤창" /> -->
+<!-- 		<put-attribute name="body" value="/WEB-INF/views/main.jsp" /> -->
+<!-- 	</definition> -->
+	
+	
+	<definition name="/community/community" extends="baseLayout">
+		<put-attribute name="title" value="커뮤창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/community.jsp" />
+	</definition>
+	
+	<definition name="/community/articleForm" extends="baseLayout">
+		<put-attribute name="title" value="커뮤게시글작성창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/articleForm.jsp" />
+	</definition>
+	
+	<definition name="/community/viewArticle" extends="baseLayout">
+		<put-attribute name="title" value="게시글창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/viewArticle.jsp" />
+	</definition>
+	
+	<definition name="/community/inqueryForm" extends="baseLayout">
+		<put-attribute name="title" value="문의창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/inqueryForm.jsp" />
+	</definition>
+	
+	<definition name="/community/viewInquery" extends="baseLayout">
+		<put-attribute name="title" value="문의상세창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/viewInquery.jsp" />
+	</definition>
+	
+	<definition name="/community/viewEvent" extends="baseLayout">
+		<put-attribute name="title" value="이벤트상세창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/viewEvent.jsp" />
+	</definition>
+	
+	<definition name="/community/recipeMore" extends="baseLayout">
+		<put-attribute name="title" value="레시피창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/recipeMore.jsp" />
+	</definition>
+	
+	<definition name="/community/veganLifeMore" extends="baseLayout">
+		<put-attribute name="title" value="비건라이프창" />
+		<put-attribute name="body" value="/WEB-INF/views/community/veganLifeMore.jsp" />
+	</definition>
+
+</tiles-definitions>

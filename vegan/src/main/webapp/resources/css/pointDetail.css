@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+.mypageMain {
+    margin: 0 auto 50px;
+}
+
+.profile {
+    border: 1px solid #777;
+    margin: 50px auto;
+    height: 350px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.proPick {
+    width: 150px;
+    display: block;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.container {
+    margin:0 auto 50px;
+    width:800px;
+    box-sizing: border-box;
+ 
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.pointDiv {
+    margin-top: 20px;
+}
+
+.div1 {
+    float:left;
+}
+
+.div2 {
+    float:right;
+}
+
+.pointChange {
+    margin-top: 10px;
+}
+
+hr {
+    clear:both;
+}

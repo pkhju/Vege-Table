@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.reserv">
+	<resultMap type="reservDTO" id="reservResult">	
+		<result property="resto_name" column="resto_name" />
+		<result property="resto_addr" column="resto_addr" />
+		<result property="c_email" column="c_email" />
+		<result property="u_email" column="u_email" />
+		<result property="reserv_no" column="reserv_no" />
+		<result property="resto_no" column="resto_no" />
+		<result property="reserv_date" column="reserv_date" />
+		<result property="reserv_sched" column="reserv_sched" />
+		<result property="reserv_member" column="reserv_member" />
+		<result property="reserv_deposit" column="reserv_deposit" />
+		<result property="reserv_condition" column="reserv_condition" />	
+	</resultMap>
+
+	
+	<insert id="addReserv" parameterType="reservDTO">
+		<![CDATA[
+			insert into reserv (resto_name, resto_addr, c_email, u_email, reserv_no, resto_no, reserv_date, reserv_sched, reserv_member, reserv_deposit)
+			values(#{resto_name}, #{resto_addr}, #{c_email}, #{u_email}, #{reserv_no}, #{resto_no}, sysdate, #{reserv_sched}, #{reserv_member}, #{reserv_deposit})
+		]]>
+	</insert>
+	
+	<select id="selectReserv" parameterType="String" resultType="reservDTO">
+		<![CDATA[
+			select u_email, resto_no, reserv_date, reserv_sched, reserv_member, reserv_deposit, reserv_condition from reserv where reserv_no=#{reserv_no}
+		]]>
+	</select>
+	
+	<select id="reservA" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='A' and u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="reservB" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='B' and u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="reservC" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='C' and u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="reservD" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='D' and u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="reservE" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='E' and u_email=#{u_email}
+		]]>
+	</select>
+	
+	<select id="selectResult" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from reserv where reserv_no=#{reserv_no}
+		]]>
+	</select>
+	
+	<select id="cReservA" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='A' and c_email=#{c_email}
+		]]>
+	</select>
+	
+	<select id="cReservB" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='B' and c_email=#{c_email}
+		]]>
+	</select>
+	
+	<select id="cReservC" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='C' and c_email=#{c_email}
+		]]>
+	</select>
+	
+	<select id="cReservD" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='D' and c_email=#{c_email}
+		]]>
+	</select>
+	
+	<select id="cReservE" parameterType="String" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv where reserv_condition='E' and c_email=#{c_email}
+		]]>
+	</select>
+	
+	<select id="getReserv" resultMap="reservResult">
+		<![CDATA[
+			select * from reserv
+		]]>
+	</select>
+</mapper>

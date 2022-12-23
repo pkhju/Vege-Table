@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+.reservBox {
+    border:2px solid #CBD1D7;
+    height: 200px;
+    width:490px;
+    border-radius:10px;
+    display: block;
+    margin: 20px auto;
+}
+
+.imgBox {
+    float:left;
+    height: 180px;
+    width : 150px;
+    margin-top: 10px;
+    margin-left: 15px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.textBox {
+    float:left;
+    height : 170px;
+    width:290px;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding:10px;
+}
+
+p {
+    margin : 0px;
+    line-height: 80%; 
+}
+
+.btn {
+    margin-right:5px;
+}
+
+
+.reservBox2 {
+    display: none;
+}
+
+.reservBox3 {
+    display : none;
+}
+
+.btnChange {
+    width:400px;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding:10px;
+    border-radius: 10px;
+}
+

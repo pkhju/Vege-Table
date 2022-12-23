@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.spring.vegan.community.dto.CommunityDTO" alias="communityDTO" />
+		<typeAlias type="com.spring.vegan.community.dto.ReplyDTO" alias="replyDTO" />
+		<typeAlias type="com.spring.vegan.community.dto.InqueryDTO" alias="inqueryDTO"/>
+		<typeAlias type="com.spring.vegan.community.dto.C_ImageDTO" alias="c_imageDTO" />
+		<typeAlias type="com.spring.vegan.community.dto.Iq_ImageDTO" alias="iq_imageDTO" />
+		<typeAlias type="com.spring.vegan.community.dto.Com_ScrapDTO" alias="com_scrapDTO" />
+		<typeAlias type="com.spring.vegan.community.dto.Com_HeartDTO" alias="com_heartDTO" />
+
+		<typeAlias type="com.spring.vegan.reservation.dto.ReservDTO" alias="ReservDTO" />
+		
+		<typeAlias type="com.spring.vegan.resto.dto.RestoDTO" alias="restoDTO" />
+		<typeAlias type="com.spring.vegan.resto.dto.ReviewDTO" alias="reviewDTO" />
+		<typeAlias type="com.spring.vegan.resto.dto.Resto_ImageDTO" alias="resto_ImageDTO" />
+		
+		<typeAlias type="com.spring.vegan.member.dto.User_onDTO" alias="user_onDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.SearchDTO" alias="searchDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.PointDTO" alias="pointDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.LoginDTO" alias="loginDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.Client_onDTO" alias="client_onDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.Card_payDTO" alias="card_payDTO" />
+		
+		<typeAlias type="com.spring.vegan.member.dto.EventDTO" alias="eventDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.E_ImageDTO" alias="e_imageDTO" />
+		<typeAlias type="com.spring.vegan.member.dto.Iq_ReplyDTO" alias="iq_replyDTO" />
+	</typeAliases>
+</configuration>

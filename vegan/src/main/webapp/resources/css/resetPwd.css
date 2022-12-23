@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.searchLoginInfo {
+     /* border: 1px solid #999; */
+     min-height: 350px;
+     margin: 0 auto;
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     transform: translate(-50%, -50%);
+     border-radius: 10px;
+     text-align: center;
+ }
+
+ .btn {
+     margin-top: 40px;
+     max-width: 300px;
+ }
+
+ .input-group {
+     max-width: 300px;
+     margin: 0 auto;
+ }
+
+ .form-label {
+     margin-top: 35px;
+ }

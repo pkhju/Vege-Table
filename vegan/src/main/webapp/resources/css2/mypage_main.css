@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+.mypageMain {
+    margin: 0 auto 50px;
+}
+
+.profile {
+    border: 1px solid #777;
+    margin: 50px auto;
+    height: 350px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 380px;
+    width: 21.8vw;
+}
+
+.scrap {
+    /* border: 0.5px solid #777; */
+    margin-left: -12px;
+    display: flex;
+    width: 800px;
+    height: 200px;
+}
+
+.proPick {
+    width: 150px;
+    display: block;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.scrapPic {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0.5px solid #777;
+}
+
+.container {
+    margin:0 auto 50px;
+    width:800px;
+    box-sizing: border-box;
+ 
+}
+.user_title {
+    font-size: 12px;
+    color: #999;
+    vertical-align: middle;
+    font-weight: bold;
+}
