@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+ <!--    해당 설정파일에서 사용하는 프로퍼티-->
+    <Properties>
+        <Property name="logNm">Spring Log4j2 Test</Property>
+		<Property name="layoutPattern">
+			%d{YYYY.MM.dd HH:mm:ss} [%-5level] %c "%msg"%n
+		</Property>
+    </Properties>
+  <!--    LogEvent를 전달해주는 Appender-->
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+			<PatternLayout pattern="${layoutPattern}"/>
+        </Console>
+        <RollingFile name="DailyFileAppender" fileName="E:\\log\\outlog.log" filePattern="E:\\log\\outlog_%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="200KB"/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+        </RollingFile>
+    </Appenders>
+  <!--    실제 Logger-->
+    <Loggers>
+        <Root level="DEBUG" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Root>
+        
+        <Logger name="com.spring.vegan"  level="INFO" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        
+        <!-- 3rdparty Loggers -->
+        <Logger name="org.springframework.core"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        <Logger name="org.springframework.beans"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        <Logger name="org.springframework.context"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        <Logger name="org.springframework.web"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        
+        <!-- JDBC -->
+        <Logger name="jdbc.sqlonly"  level="DEBUG" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        
+    </Loggers>
+</Configuration>
