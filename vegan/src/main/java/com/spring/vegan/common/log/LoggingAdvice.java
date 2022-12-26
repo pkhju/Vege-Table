@@ -21,7 +21,6 @@ public class LoggingAdvice {
 			+ "execution(* com.spring.vegan.*.dao.*.*(..))")
 	public void startLog(JoinPoint jp) {
 		logger.info("---------------------------------------");
-		logger.info("---------------------------------------");
 		logger.info("@Before");
 		// 전달되는 모든 파라미터들을 Object의 배열로 가져온다.
 		logger.info("1. parameter : " + Arrays.toString(jp.getArgs()));
@@ -39,7 +38,6 @@ public class LoggingAdvice {
 	@After("execution(* com.spring.vegan.member.service.*.*(..)) or "
 			+ "execution(* com.spring.vegan.member.dao.*.*(..))")
 	public void AfterLog(JoinPoint jp) {
-		logger.info("---------------------------------------");
 		logger.info("---------------------------------------");
 		logger.info("@After");
 
