@@ -29,7 +29,6 @@
     <div class="loginBox">
         <main class="form-signin">
             <form method="post" name="frmLogin" action="${path }/member/login.do">
-            
             	<!-- 로고 시작 -->
             	<div class="section-logo">
 	                <a href="${path }/member/main"><img class="mb-4" src="<c:url value='/resources/img/vegetable_logos_finals/tight_light_mask.png' />" 

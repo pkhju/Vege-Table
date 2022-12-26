@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,10 +47,8 @@ import com.spring.vegan.member.dto.Iq_ReplyDTO;
 @Controller
 @EnableAsync // @EnableAsync 를 지정해서 메서드를 호출할 경우 비동기로 동작하게 하는 @Async 기능 사용 가능
 public class MemberControllerImpl implements MemberController {
+	private static final Logger logger = LogManager.getLogger(MemberControllerImpl.class);
 	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
-	
-	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
-	
 	
 	@Autowired
 	private MemberService memberService;
@@ -62,7 +60,7 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse resoponse) throws Exception {
 		String viewName = "/member/loginForm";
 		ModelAndView mav = new ModelAndView(viewName);
-
+		logger.info("public ModelAndView " + Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		return mav;
 	}
 

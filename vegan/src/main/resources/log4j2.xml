@@ -23,7 +23,7 @@
     </Appenders>
   <!--    실제 Logger-->
     <Loggers>
-        <Root level="DEBUG" additivity="false">
+        <Root level="INFO" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </Root>
