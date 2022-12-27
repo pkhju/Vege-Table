@@ -173,20 +173,32 @@
 	
 	<select id="selectU_auth" parameterType="String" resultType="String">
 		<![CDATA[
-			select u_auth from user_on where u_email = #{u_email}
+			select u_auth from user_on where u_email = #{email}
 		]]>
 	</select>
 	
 	<update id="updateU_auth" parameterType="String">
 		<![CDATA[
-			update user_on set u_auth = 'Y' where u_email = #{u_email}
+			update user_on set u_auth = 'B' where u_email = #{email}
+		]]>
+	</update>
+	
+	<select id="selectC_auth" parameterType="String" resultType="String">
+		<![CDATA[
+			select c_auth from client_on where c_email = #{email}
+		]]>
+	</select>
+	
+	<update id="updateC_auth" parameterType="String">
+		<![CDATA[
+			update client_on set c_auth = 'B' where c_email = #{email}
 		]]>
 	</update>
 	
 	<!-- <,>,& 등에만 <![CDATA[]]> 로 감싸면 됨. 특수문자를 쿼리문이 아닌 xml 태그로 인식하는 것을 막기 위함 -->
 	<insert id="insertJoinUser" parameterType="user_onDTO">
 		<![CDATA[
-			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_addr} , #{u_lvl}, sysdate, default, null)
+			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_lvl}, #{u_addr}, sysdate, default, null)
 		]]>
 	</insert>
 	

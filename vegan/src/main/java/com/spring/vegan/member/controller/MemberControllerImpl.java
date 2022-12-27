@@ -463,7 +463,7 @@ public class MemberControllerImpl implements MemberController {
 		if ( result == 1 ) {
 			// DB 에 데이터가 정상적으로 저장된 경우
 			// 인증 이메일 보내고 성공하면 화면 전환
-			sendEmail(input_email, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?email=", input_name,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");
+			sendEmail(input_name, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?email=", input_email,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");
 			viewName = "/member/proc";
 			mav.addObject("joinProc", true);
 			mav.addObject("input_email", input_email);
@@ -501,7 +501,8 @@ public class MemberControllerImpl implements MemberController {
 		sb.append("<p>" + message + "</p>");
 		sb.append("<a href='http://localhost:8090/vegan/member" + url + input_email + "'>" + procName + "</a>");
 		sb.append("</body></html>");
-		
+		logger.info("input_name: " + input_name);
+		logger.info("input_email: " + input_email);
 		String content = sb.toString();
 		
 		// memberService 의 sendAuthMail 메서드로 주소, 제목, 내용을 전달
@@ -512,20 +513,23 @@ public class MemberControllerImpl implements MemberController {
 	}
 
 	@Override
-	@RequestMapping(value="/member/certifEmail") // 사용자가 수신한 인증 이메일을 클릭한 경우 u_auth 값을 'Y'로 업데이트하는 메서드
+	@RequestMapping(value="/member/certifEmail") // 사용자가 수신한 인증 이메일을 클릭한 경우 u_auth 값을 'B'로 업데이트하는 메서드
 	public ModelAndView certifEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = null;
 		ModelAndView mav = new ModelAndView();		
-		String u_email = request.getParameter("u_email");
-		int result = memberService.certifEmail(u_email);
+		String email = request.getParameter("email");
+		int result = memberService.certifEmail(email);
 		
 		if ( result == 1 ) {
-			// u_auth 컬럼값 Y로 변경됨 -> 로그인 시 서비스 이용 가능
-			mav.addObject("certifEmail", true);
+			// u_auth 컬럼값 B로 변경됨 -> 로그인 시 서비스 이용 가능
+			mav.addObject("certifEmail", 1);
 			
 		} else if ( result == 999 ) {
 			// 이미 인증된 계정
-			mav.addObject("certifEmail", false);
+			mav.addObject("certifEmail", 999);
+		} else if ( result == 888 ) {
+			// 비활성화된 계정
+			mav.addObject("certifEmail", 888);
 		}
 		viewName = "/member/proc";
 		mav.setViewName(viewName);

@@ -218,17 +218,36 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int certifEmail(String u_email) {
+	public int certifEmail(String email) {
 		int result = 0;
 		try {
-			String u_auth = sqlSession.selectOne("mapper.member.selectU_auth", u_email);
-			if ( u_auth.equals("N") ) {
-				result = sqlSession.update("mapper.member.updateU_auth", u_email);
-			} else if ( u_auth.equals("Y") ){
-				result = 999;
+			// user_on
+			String u_auth = sqlSession.selectOne("mapper.member.selectU_auth", email);
+			if ( u_auth != null ) {
+				if ( u_auth.equals("A") ) {
+					result = sqlSession.update("mapper.member.updateU_auth", email);
+				} else if ( u_auth.equals("B") ){ // 이미 인증된 계정
+					result = 999;
+				} else if ( u_auth.equals("C") ) { // 비활성화된 계정
+					result = 888;
+				}
+			} else {
+				// client_on
+				String c_auth = sqlSession.selectOne("mapper.member.selectC_auth", email);
+				if ( c_auth != null ) {
+					if ( c_auth.equals("A") ) {
+						result = sqlSession.update("mapper.member.updateU_auth", email);
+					} else if ( c_auth.equals("B") ){ // 이미 인증된 계정
+						result = 999;
+					} else if ( c_auth.equals("C") ) { // 비활성화된 계정
+						result = 888;
+					}
+				}
 			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
 		return result;

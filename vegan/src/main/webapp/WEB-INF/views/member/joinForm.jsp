@@ -110,43 +110,43 @@
                 <div class="col-12">
                     <label class="form-label">비건단계[선택]</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v1">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v1" value="A">
                         <label class="form-check-label" for="v1">
                             비건 (Vegan)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v2">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v2" value="B">
                         <label class="form-check-label" for="v2">
                             락토 베지테리언 (lacto-vegetarian)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v3">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v3" value="C">
                         <label class="form-check-label" for="v3">
                             오보 베지테리언 (ovo-vegetarian)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v4">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v4" value="D">
                         <label class="form-check-label" for="v4">
                             락토 오보 베지테리언 (lacto-ovo-vegetarian)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v5">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v5" value="E">
                         <label class="form-check-label" for="v5">
                             페스코 베지테리언 (Pescatarian 또는 Pesco-vegetarian)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v6">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v6" value="F">
                         <label class="form-check-label" for="v6">
                             폴로 베지테리언 (Pollotarian)
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="input_lvl" id="v7">
+                        <input class="form-check-input" type="radio" name="input_lvl" id="v7" value="G">
                         <label class="form-check-label" for="flexRadioDefault1">
                             플랙시테리언 (Flexitarian)
                         </label>

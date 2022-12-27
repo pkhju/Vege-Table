@@ -125,9 +125,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int certifEmail(String u_email) {
+	public int certifEmail(String email) {
 		// TODO Auto-generated method stub
-		return memberDAO.certifEmail(u_email);
+		return memberDAO.certifEmail(email);
 	}
 
 	@Override

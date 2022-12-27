@@ -64,10 +64,6 @@
         	<AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </Logger>
-        <Logger name="jdbc.resultsettable"  level="DEBUG" additivity="false">
-        	<AppenderRef ref="ConsoleAppender"/>
-            <AppenderRef ref="DailyFileAppender"/>
-        </Logger>
         
     </Loggers>
 </Configuration>
