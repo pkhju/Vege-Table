@@ -12,6 +12,8 @@
 <body>
 <div id="wrap">
 	<div class="txt_proc">
+	
+		<!-- 이메일 인증 시작 -->
 		<c:if test="${certifEmail != null }">
 			<c:choose>
 				<c:when test="${certifEmail == true }">
@@ -19,17 +21,24 @@
 				서비스 이용이 가능합니다.
 			</c:when>
 				<c:otherwise>
-				이미 인증 처리된 계정입니다.
+				이미 인증 처리된 계정입니다.<br>
+				인증하지 않은 계정인 경우 관리자에게 문의해 주세요.<br>
+				<a href="#">관리자에게 문의하기 ></a>
 			</c:otherwise>
 			</c:choose>
 			<a href="${path }/member/login">로그인하기 ></a>
 		</c:if>
+		<!-- 이메일 인증 끝 -->
 	
+		<!-- 로그인 시작 -->
 		<c:if test="${auth == 'A' }">
-			이메일 인증이 필요한 계정입니다.
+			이메일 인증이 필요한 계정입니다.<br>
+			문제가 발생한 경우 관리자에게 문의해 주세요.<br>
+			<a href="#">관리자에게 문의하기 ></a>
 		</c:if>
 		<c:if test="${auth == 'C' }">
-			비활성화된 계정입니다. 관리자에게 문의해 주세요.
+			비활성화된 계정입니다. 관리자에게 문의해 주세요.<br>
+			<a href="#">관리자에게 문의하기 ></a>
 		</c:if>
 		<c:if test="${joinProc != null && joinProc == true }">
 			${input_email } 님 회원가입이 완료되었습니다. <br>
@@ -39,15 +48,9 @@
 			문제가 발생하였습니다. 관리자에게 문의해 주세요. <br>
 			<a href="#">관리자에게 문의하기 ></a>
 		</c:if>
-		
-		<c:if test="${modifyProc != null && modifyProc == true}">
-			회원정보가 수정되었습니다.
-		</c:if>
-		<c:if test="${result == 'user_off' }">
-			이메일: ${u_email_off } <br>
-			비활성화된 계정입니다. <br>
-			<a href="#">계정 비활성화 해제하기 ></a>
-		</c:if>
+		<!-- 로그인 끝 -->
+
+		<!-- 비밀번호 재설정 시작 -->
 		<c:if test="${resetPwd != null && resetPwd == true }">
 			비밀번호가 정상적으로 재설정되었습니다. <br>
 			<a href="${path }/member/login">로그인하기 ></a>
@@ -56,6 +59,9 @@
 			비밀번호 재설정 중 문제가 발생하였습니다. 관리자에게 문의해 주세요. <br>
 			<a href="#">관리자에게 문의하기 ></a>
 		</c:if>
+		<!-- 비밀번호 재설정 끝 -->
+		
+		<!-- 계정 비활성화 시작 -->
 		<c:if test="${delProc != null && delProc == true }">
 			계정이 비활성화되었습니다.
 		</c:if>
@@ -63,6 +69,9 @@
 			문제가 발생하였습니다. 관리자에게 문의해 주세요. <br>
 			<a href="#">관리자에게 문의하기 ></a>
 		</c:if>
+		<!-- 계정 비활성화 시작 -->
+		
+		<!-- 이메일/비밀번호 찾기 시작 -->
 		<c:if test="${email != null && restting == null}">
 			이메일 찾기
 			<p>${email }</p>
@@ -75,6 +84,7 @@
 		<c:if test="${pwd != null }">
 			${pwd }
 		</c:if>
+		<!-- 이메일/비밀번호 찾기 끝 -->
 	</div>
 </div>
 </body>
