@@ -23,7 +23,7 @@
     </Appenders>
   <!--    실제 Logger-->
     <Loggers>
-        <Root level="INFO" additivity="false">
+        <Root level="DEBUG" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </Root>
@@ -50,9 +50,21 @@
         	<AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </Logger>
+        <Logger name="org.apache.commons"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        <Logger name="org.springframework.aop"  level="WARN" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
         
         <!-- JDBC -->
         <Logger name="jdbc.sqlonly"  level="DEBUG" additivity="false">
+        	<AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="DailyFileAppender"/>
+        </Logger>
+        <Logger name="jdbc.resultsettable"  level="DEBUG" additivity="false">
         	<AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </Logger>

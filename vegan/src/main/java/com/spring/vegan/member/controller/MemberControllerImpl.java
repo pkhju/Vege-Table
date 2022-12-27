@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ import com.spring.vegan.member.dto.Iq_ReplyDTO;
 
 @Controller
 @EnableAsync // @EnableAsync 를 지정해서 메서드를 호출할 경우 비동기로 동작하게 하는 @Async 기능 사용 가능
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MemberControllerImpl implements MemberController {
 	private static final Logger logger = LogManager.getLogger(MemberControllerImpl.class);
 	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
@@ -153,20 +155,7 @@ public class MemberControllerImpl implements MemberController {
 				mav.addObject("result", "loginFailed");
 			}
 		}
-			
-			// mav.setViewName("redirect:" + viewName);
-			// 로그인 실패했을 경우 비활성화된 계정인지 확인
-//			String u_email_off = memberService.selectU_email_off(request.getParameter("email"));
-//			if ( u_email_off != null ) {
-//				// 비활성화된 계정임이 확인됨
-//				viewName = "/member/proc";
-//				mav.addObject("result", "user_off");
-//				mav.addObject("u_email_off", u_email_off);
-//			} else {
-				// 등록된 적 없는 계정
-				
-//			}
-//		}
+
 		mav.setViewName(viewName);
 		return mav;
 	}
