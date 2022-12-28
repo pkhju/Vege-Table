@@ -445,21 +445,33 @@ public class MemberControllerImpl implements MemberController {
 
 	@Override
 	@RequestMapping(value="/member/joinProc.do", method = RequestMethod.POST)
-	public ModelAndView joinProc(String input_email, String input_pwd_r, String input_name, String input_nick,
+	public ModelAndView joinProc(String certify, String regiNum, String input_email, String input_pwd_r, String input_name, String input_nick,
 			String input_tel, String input_addr, String input_lvl) throws Exception {
 		// TODO Auto-generated method stub
 		String viewName = null;
+		int result = 0;
 		ModelAndView mav = new ModelAndView();
-		User_onDTO dto = new User_onDTO();
-		dto.setU_email(input_email);
-		dto.setU_pwd(input_pwd_r);
-		dto.setU_name(input_name);
-		dto.setU_nick(input_nick);
-		dto.setU_tel(input_tel);
-		dto.setU_lvl(input_lvl);
-		dto.setU_addr(input_addr);
 		
-		int result = memberService.insertJoinUser(dto);
+		if ( regiNum != null && certify != null ) {
+			Client_onDTO client_onDTO = new Client_onDTO();
+			client_onDTO.setC_email(input_email);
+			client_onDTO.setC_pwd(input_pwd_r);
+			client_onDTO.setC_name(input_name);
+			client_onDTO.setC_tel(input_tel);
+			client_onDTO.setRegiNum(regiNum);
+			client_onDTO.setCertify(certify);
+			result = memberService.insertJoinClient(client_onDTO);
+		} else {
+			User_onDTO user_onDTO = new User_onDTO();
+			user_onDTO.setU_email(input_email);
+			user_onDTO.setU_pwd(input_pwd_r);
+			user_onDTO.setU_name(input_name);
+			user_onDTO.setU_nick(input_nick);
+			user_onDTO.setU_tel(input_tel);
+			user_onDTO.setU_lvl(input_lvl);
+			user_onDTO.setU_addr(input_addr);
+			result = memberService.insertJoinUser(user_onDTO);
+		}
 		if ( result == 1 ) {
 			// DB 에 데이터가 정상적으로 저장된 경우
 			// 인증 이메일 보내고 성공하면 화면 전환
@@ -497,7 +509,7 @@ public class MemberControllerImpl implements MemberController {
 		// sendEmail(input_email, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?u_email=", input_name,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");	
 		StringBuffer sb = new StringBuffer();
 		sb.append("<html><head><meta charset='UTF-8'></head>");
-		sb.append("<body><p>" + input_name +"님, 안녕하세요.</p>");
+		sb.append("<body><p>" + input_name +" 님, 안녕하세요.</p>");
 		sb.append("<p>" + message + "</p>");
 		sb.append("<a href='http://localhost:8090/vegan/member" + url + input_email + "'>" + procName + "</a>");
 		sb.append("</body></html>");

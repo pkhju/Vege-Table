@@ -165,6 +165,12 @@
 		]]>
 	</select>
 	
+	<select id="duplicate_email_c" parameterType="String" resultType="String">
+		<![CDATA[
+			select decode(count(c_email), 1, 'false', 'true') as result from client_on where c_email = #{input_email }
+		]]>
+	</select>
+	
 	<select id="duplicate_nick" parameterType="String" resultType="String">
 		<![CDATA[
 			select decode(count(u_nick), 1, 'false', 'true') as result from user_on where u_nick = #{input_nick }
@@ -199,6 +205,12 @@
 	<insert id="insertJoinUser" parameterType="user_onDTO">
 		<![CDATA[
 			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_lvl}, #{u_addr}, sysdate, default, null)
+		]]>
+	</insert>
+	
+	<insert id="insertJoinClient" parameterType="client_onDTO">
+		<![CDATA[
+			insert into client_on values(#{c_name}, #{c_tel}, #{c_email}, #{c_pwd}, #{regiNum}, #{certify}, default, sysdate, default, null)
 		]]>
 	</insert>
 	

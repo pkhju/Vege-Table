@@ -33,6 +33,7 @@ public interface MemberService {
 	//public void sendPreConfiguredMail(String message); // xml에 저장된 내용으로 메일 전송
 	public int certifEmail(String u_email);
 	public int insertJoinUser(User_onDTO dto);
+	public int insertJoinClient(Client_onDTO client_onDTO);
 	public int updateModifyUser(User_onDTO dto);
 	public int selectReservCondition(String u_email);
 	public int deleteMemberInfo(User_onDTO user_onDTO);
@@ -54,4 +55,5 @@ public interface MemberService {
 	public void reply(Map<String, Object> articleMap);
 	public List<Iq_ReplyDTO> replyInquery(int reply_iq_no);
 	public List<Com_HeartDTO> heartInfo(String u_email);
+	
 }

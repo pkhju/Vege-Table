@@ -197,6 +197,15 @@ public class MemberDAOImpl implements MemberDAO {
 
 		try {
 			result = sqlSession.selectOne("mapper.member.duplicate_email", input_email);
+			if ( result == "true" ) { // user_on 에 없는 아이디인 경우
+				result = sqlSession.selectOne("mapper.member.duplicate_email_c", input_email);
+				if ( result == "true" ) { // client_on 에도 없는 아이디인 경우
+					return result;
+				}
+			} else { // user_on에 있는 아이디면 return false
+				return result;
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -236,7 +245,7 @@ public class MemberDAOImpl implements MemberDAO {
 				String c_auth = sqlSession.selectOne("mapper.member.selectC_auth", email);
 				if ( c_auth != null ) {
 					if ( c_auth.equals("A") ) {
-						result = sqlSession.update("mapper.member.updateU_auth", email);
+						result = sqlSession.update("mapper.member.updateC_auth", email);
 					} else if ( c_auth.equals("B") ){ // 이미 인증된 계정
 						result = 999;
 					} else if ( c_auth.equals("C") ) { // 비활성화된 계정
@@ -265,6 +274,18 @@ public class MemberDAOImpl implements MemberDAO {
 				dto.setU_lvl("");
 			}
 			result = sqlSession.insert("mapper.member.insertJoinUser", dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	@Override
+	public int insertJoinClient(Client_onDTO dto) {
+		int result = 0;
+		// TODO Auto-generated method stub
+		try {
+			result = sqlSession.insert("mapper.member.insertJoinClient", dto);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

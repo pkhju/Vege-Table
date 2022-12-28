@@ -135,6 +135,12 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDAO.insertJoinUser(dto);
 	}
+	
+	@Override
+	public int insertJoinClient(Client_onDTO dto) {
+		// TODO Auto-generated method stub
+		return memberDAO.insertJoinClient(dto);
+	}
 
 	@Override
 	public int updateModifyUser(User_onDTO dto) {

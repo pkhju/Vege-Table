@@ -30,6 +30,7 @@ public interface MemberDAO {
 	public String duplicate_nick(String input_nick);
 	public int certifEmail(String u_email);
 	public int insertJoinUser(User_onDTO dto);
+	public int insertJoinClient(Client_onDTO dto);
 	public int updateModifyUser(User_onDTO dto);
 	public int selectReservCondition(String u_email);
 	public int deleteMemberInfo(User_onDTO user_onDTO);

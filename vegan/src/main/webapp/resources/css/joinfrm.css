@@ -1,10 +1,7 @@
 @charset "UTF-8";
-.join_topMenu {
-	
-}
 .container {
     display: block;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 100px;
 }
 
@@ -26,20 +23,24 @@
 .r_false {
     color: red;
 }
-.option {
-    font-size: 12px;
+.join-option {
+    font-size: 14px;
+    color: #555;
 }
 .txt_pwd_form {
-    float: right;
+    color: red;
 }
 .join_topMenu {
-	width: 25%;
-	margin: 50px auto 0;
-	text-align: right;
+	margin: 50px auto 0;	
 }
 .join_topMenu a {
 	color: #555;
+	font-size: 14px;
 }
 .join_topMenu a:hover {
 	color: #333;
+}
+.join-title {
+	text-align: center;
+	margin: 0 0 40px 0;
 }

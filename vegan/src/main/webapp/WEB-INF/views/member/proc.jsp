@@ -18,12 +18,14 @@
 			<c:choose>
 				<c:when test="${certifEmail == 1 }">
 					이메일이 인증되었습니다.<br>
-					서비스 이용이 가능합니다.
+					서비스 이용이 가능합니다.<br>
+					<a href="${path }/member/login">로그인하기 ></a>
 				</c:when>
 				<c:when test="${certifEmail == 999 }">
 					이미 인증 처리된 계정입니다.<br>
 					인증하지 않은 계정인 경우 관리자에게 문의해 주세요.<br>
-					<a href="#">관리자에게 문의하기 ></a>
+					<a href="#">관리자에게 문의하기 ></a><br>
+					<a href="${path }/member/login">로그인하기 ></a>
 				</c:when>
 				<c:when test="${certifEmail == 888 }">
 					비활성화된 계정입니다. 관리자에게 문의해 주세요.<br>
@@ -34,7 +36,6 @@
 					<a href="#">관리자에게 문의하기 ></a>
 				</c:otherwise>
 			</c:choose>
-			<a href="${path }/member/login">로그인하기 ></a>
 		</c:if>
 		<!-- 이메일 인증 끝 -->
 	
