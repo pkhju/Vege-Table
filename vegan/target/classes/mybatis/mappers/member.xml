@@ -42,6 +42,9 @@
 		<result property="point_history" column="point_history" />
 		<result property="point_detail" column="point_detail" />
 		<result property="point_date" column="point_date" />
+		<result property="reserv_no" column="reserv_no" />
+		<result property="point_no" column="point_no" />
+		<result property="resto_name" column="resto_name" />
 	</resultMap>
 	
 	<resultMap type="reservDTO" id="reservResult">
@@ -123,14 +126,14 @@
 	
 	<select id="selectCardPay" parameterType="String" resultType="card_payDTO">
 		<![CDATA[
-			select * from (select * from card_pay where email = #{card_payDTO.getEmail() } order by card_time desc) where rownum = 1
+			select * from (select * from card_pay where email = #{email } order by point_detail desc) where rownum = 1
 		]]>
-		<!-- point_detail: 거래 승인 번호가 최근인 순으로 정렬하는 sql문으로 수정하기 -->
+		<!-- 거래 승인 번호가 제일 최근인 건 가져옴 -->
 	</select>
 	
 	<insert id="insertPoint" parameterType="pointDTO">
 		<![CDATA[
-			insert into point values(#{email}, #{point_change}, #{point_rest}, #{point_history}, #{point_detail})
+			insert into point values(#{email}, #{point_change}, sysdate, #{point_rest}, #{point_history}, #{point_detail}, #{reserv_no}, seq_point.nextval)
 		]]>
 	</insert>
 	
@@ -155,13 +158,20 @@
 	
 	<select id="selectPointList" parameterType="String" resultMap="pointDTO">
 		<![CDATA[
-			select * from point where email = #{email} order by point_date desc
+			select email, point_change, point_date, point_history, reserv_no, (select resto_name from reserv r, point p where p.reserv_no = r.reserv_no) resto_name
+			from point where email = #{email} order by point_date desc
 		]]>
 	</select>
 	
 	<select id="duplicate_email" parameterType="String" resultType="String">
 		<![CDATA[
 			select decode(count(u_email), 1, 'false', 'true') as result from user_on where u_email = #{input_email }
+		]]>
+	</select>
+	
+	<select id="duplicate_email_c" parameterType="String" resultType="String">
+		<![CDATA[
+			select decode(count(c_email), 1, 'false', 'true') as result from client_on where c_email = #{input_email }
 		]]>
 	</select>
 	
@@ -173,20 +183,38 @@
 	
 	<select id="selectU_auth" parameterType="String" resultType="String">
 		<![CDATA[
-			select u_auth from user_on where u_email = #{u_email}
+			select u_auth from user_on where u_email = #{email}
 		]]>
 	</select>
 	
 	<update id="updateU_auth" parameterType="String">
 		<![CDATA[
-			update user_on set u_auth = 'Y' where u_email = #{u_email}
+			update user_on set u_auth = 'B' where u_email = #{email}
+		]]>
+	</update>
+	
+	<select id="selectC_auth" parameterType="String" resultType="String">
+		<![CDATA[
+			select c_auth from client_on where c_email = #{email}
+		]]>
+	</select>
+	
+	<update id="updateC_auth" parameterType="String">
+		<![CDATA[
+			update client_on set c_auth = 'B' where c_email = #{email}
 		]]>
 	</update>
 	
 	<!-- <,>,& 등에만 <![CDATA[]]> 로 감싸면 됨. 특수문자를 쿼리문이 아닌 xml 태그로 인식하는 것을 막기 위함 -->
 	<insert id="insertJoinUser" parameterType="user_onDTO">
 		<![CDATA[
-			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_addr} , #{u_lvl}, sysdate, default, null)
+			insert into user_on values(#{u_name}, #{u_tel}, #{u_email}, #{u_pwd}, #{u_nick}, default, #{u_lvl}, #{u_addr}, sysdate, default, null)
+		]]>
+	</insert>
+	
+	<insert id="insertJoinClient" parameterType="client_onDTO">
+		<![CDATA[
+			insert into client_on values(#{c_name}, #{c_tel}, #{c_email}, #{c_pwd}, #{regiNum}, #{certify}, default, sysdate, default, null)
 		]]>
 	</insert>
 	

@@ -18,14 +18,13 @@ public interface MemberController {
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView join(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView join_c(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView joinProc(@RequestParam("input_email") String input_email, @RequestParam("input_pwd_r") String input_pwd_r, @RequestParam("input_name") String input_name, @RequestParam("input_nick") String input_nick, @RequestParam("input_tel") String input_tel, @RequestParam("input_addr") String input_addr, @RequestParam("input_lvl") String input_lvl) throws Exception;
+	public ModelAndView joinProc(@RequestParam("certify") String certify, @RequestParam("regiNum") String regiNum, @RequestParam("input_email") String input_email, @RequestParam("input_pwd_r") String input_pwd_r, @RequestParam("input_name") String input_name, @RequestParam("input_nick") String input_nick, @RequestParam("input_tel") String input_tel, @RequestParam("input_addr") String input_addr, @RequestParam("input_lvl") String input_lvl) throws Exception;
 	public void joinProc_(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public void delConfirm(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView loginProc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView logoutProc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView searchProc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView mypoint(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView mypoint_c(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView MemberList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView listMemberInfo(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	//	public ModelAndView reservation(HttpServletRequest request,HttpServletResponse response) throws Exception;

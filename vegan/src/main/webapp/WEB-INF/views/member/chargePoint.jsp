@@ -13,10 +13,10 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="<c:url value='/resources/css/common.css' />" rel="stylesheet">
     <link href="<c:url value='/resources/css/chargePoint.css' />" rel="stylesheet">
-    <script src="<c:url value='/resources/script/mypoint.js' />"></script>    
+    <script src="${path }/resources/script/chargePoint.js"></script>    
     
 <c:if test="${user_onDTO == null && client_onDTO == null }">
-	<script src="<c:url value='/resources/script/noSession.js' />"></script>
+	<script src="${path }/resources/script/noSession.js"></script>
 </c:if>
 
 </head>
@@ -30,16 +30,12 @@
         <h4 class="mb-3">포인트 충전</h4>
 
         <form class="needs-validation" novalidate name="frmCharge" method="post">
-
             <div class="g-3">
                 <!-- 충전금액 시작 -->
                 <div>
                     <label class="form-label">충전금액</label>
-                    <span class="form_option">&nbsp;충전할 금액을 입력하세요. (1만원부터 충전 가능)</span>
-                    <input type="text" class="form-control form30" value="20000" name="input_point" id="input_point" placeholder="충전할 금액 입력" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                    <div class="invalid-feedback">
-                        Valid restaurant name is required.
-                    </div>
+                    <input type="text" class="form-control form30" name="input_point" id="input_point" placeholder="충전할 금액 입력" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <span class="form_option">충전할 금액을 입력하세요. (1만원부터 충전 가능)</span>
                 </div>
                 <!-- 충전금액 끝 -->
                 <div class="between"></div>
@@ -48,7 +44,7 @@
                 <label class="form-label" id="card_s">카드종류</label>
                 <div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" checked type="radio" name="card_sort" id="card_sort1" value="개인">
+                        <input class="form-check-input" type="radio" name="card_sort" id="card_sort1" value="개인">
                         <label class="form-check-label" for="card_sort1">개인카드</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -59,6 +55,7 @@
                 <!-- 카드종류 선택 끝 -->
 
                 <div class="between"></div>
+                
                 <!-- 카드번호 시작 -->
                 <label class="form-label">카드번호</label>
                 <div class="col-12">
@@ -66,9 +63,6 @@
                     <input type="text" class="form-control form20" name="card_no2" required id="card_no2" value="6378" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     <input type="text" class="form-control form20" name="card_no3" required id="card_no3" value="9000" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     <input type="text" class="form-control form20" name="card_no4" required id="card_no4" value="0343" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                    <div class="invalid-feedback">
-                        Valid restaurant name is required.
-                    </div>
                 </div>
                 <!-- 카드번호 끝 -->
                 <div class="between"></div>
@@ -81,18 +75,12 @@
                             <option value="${i }" selected="selected">${i }</option>	
                         </c:forEach>
                     </select><span class="form_option">월&nbsp;</span>
-                    <div class="invalid-feedback">
-                        Please select a valid level.
-                    </div>
                     <select class="form-select form25" required name="card_valid_y" id="card_valid_y">
                         <option >선택</option>
                         <c:forEach var="j" begin="2022" end="2035" step="1">
                             <option value="${j }" selected="selected">${j }</option>	
                         </c:forEach>
                     </select><span class="form_option">년&nbsp;</span>
-                    <div class="invalid-feedback">
-                        Please select a valid level.
-                    </div>
                 </div>
                 <!-- 유효기간 선택 끝 -->
                 
@@ -108,9 +96,6 @@
                         <option value="4">4개월</option>	
                         <option value="5">5개월</option>
                     </select>
-                    <div class="invalid-feedback">
-                        Please select a valid level.
-                    </div>
                 </div>
                 <!-- 할부기간 선택 끝 -->
 
@@ -119,45 +104,30 @@
                 <label class="form-label">신용카드 비밀번호</label>
                 <div class="col-lg-12">
                     <input type="password" class="form-control form20" name="card_pwd" value="55" required placeholder="**" id="card_pwd" maxlength="2"> **<span class="form_option">&nbsp;앞 두자리</span>
-                    <div class="invalid-feedback">
-                        Valid restaurant name is required.
-                    </div>
                 </div>
                 <!-- 신용카드 비밀번호 끝 -->
                 <div class="between"></div>
                 <!-- 인증번호 시작 -->
                 <div>
                     <label class="form-label">인증번호</label>
-                    <span class="form_option">주민등록번호 앞 6자리 또는 사업자등록번호 10자리</span>
                     <input type="text" class="form-control form30" name="card_regiNum" required maxlength="10" value="123456" id="card_regiNum" placeholder="주민등록번호 앞 6자리 또는 사업자등록번호 10자리">
-                    <div class="invalid-feedback">
-                        Valid restaurant name is required.
-                    </div>
+                    <span class="form_option">주민등록번호 앞 6자리 또는 사업자등록번호 10자리</span>
                 </div>
                 <!-- 인증번호 끝 -->
+                
+                <c:choose>
+                	<c:when test="${user_onDTO != null && client_onDTO == null }">
+                		<input type="hidden" name="user_categoty" value="user">
+                	</c:when>
+                	<c:when test="${client_onDTO != null && user_onDTO == null }">
+                		<input type="hidden" name="user_categoty" value="client">
+                	</c:when>
+                </c:choose>
                 <button class="w-100 btn btn-primary btn-lg" type="button" style="background-color:#55771C; border:none; margin-top: 40px;" id="btn_charge">충전하기</button>
              </form>
         </div>
 	</div>           
     <!-- 충전 폼 끝 -->     
 
-	<c:if test="${user_onDTO != null }">
-		<script type="text/javascript">
-			btn_charge.addEventListener('click',chargeProc);
-			function chargeProc() {
-				frmCharge.action = "${path }/member/mypoint.do?command=charge" ;
-				frmCharge.submit();
-			}
-		</script>
-	</c:if>
-	<c:if test="${client_onDTO != null }">
-		<script type="text/javascript">
-			btn_charge.addEventListener('click',chargeProc);
-			function chargeProc() {
-				frmCharge.action = "${path }/member/mypoint_c.do?command=charge" ;
-				frmCharge.submit();
-			}
-		</script>
-	</c:if>
 </body>
 </html>

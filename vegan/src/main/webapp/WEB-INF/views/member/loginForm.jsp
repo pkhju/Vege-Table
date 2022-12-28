@@ -13,15 +13,8 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value='/resources/css/common.css' />"> 
 	<link href="${path }/resources/css/login.css" rel="stylesheet">
-    
-    <c:if test="${result != null && result == 'loginFailed' }">
-		<script type="text/javascript">
-			window.onload = function() {
-				alert("이메일 또는 비밀번호가 일치하지 않습니다.");
-				//frmLogin.email.focus();
-			}	
-		</script>
-    </c:if>
+	<script src="${path }/resources/script/login.js"></script>
+
 </head>
 
 <body>
@@ -29,7 +22,6 @@
     <div class="loginBox">
         <main class="form-signin">
             <form method="post" name="frmLogin" action="${path }/member/login.do">
-            
             	<!-- 로고 시작 -->
             	<div class="section-logo">
 	                <a href="${path }/member/main"><img class="mb-4" src="<c:url value='/resources/img/vegetable_logos_finals/tight_light_mask.png' />" 
@@ -38,7 +30,7 @@
                 <!-- 로고 끝 -->
                 
                 <div class="form-floating">
-                    <input type="email" value="user01@mail.com" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                 </div>
                 <br />
@@ -146,7 +138,18 @@
         <p class="btn_exit">닫기</p>
     </div>
     <!-- 비밀번호 찾기 끝 -->
-    <script src="${path }/resources/script/login.js"></script>
+    
+	<c:if test="${result != null && result == 'loginFailed' }">
+		<script type="text/javascript">
+			alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+		</script>
+    </c:if>
+    <c:if test="${authNull != null }">
+		<script type="text/javascript">
+			alert("${authNull }");
+		</script>
+    </c:if>
+	
 </body>
 
 </html>

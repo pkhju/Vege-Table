@@ -77,14 +77,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int chargePoint(Card_payDTO card_payDTO, int u_point) {
-		return memberDAO.chargePoint(card_payDTO, u_point);
+	public int chargePoint(Card_payDTO card_payDTO, int point, String user_category) {
+		return memberDAO.chargePoint(card_payDTO, point, user_category);
 	}
 
 	@Override
-	public List<PointDTO> pointList(String u_email) {
+	public List<PointDTO> pointList(String email) {
 		// TODO Auto-generated method stub
-		return memberDAO.selectPointList(u_email);
+		return memberDAO.selectPointList(email);
 	}
 
 	@Override
@@ -125,15 +125,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int certifEmail(String u_email) {
+	public int certifEmail(String email) {
 		// TODO Auto-generated method stub
-		return memberDAO.certifEmail(u_email);
+		return memberDAO.certifEmail(email);
 	}
 
 	@Override
 	public int insertJoinUser(User_onDTO dto) {
 		// TODO Auto-generated method stub
 		return memberDAO.insertJoinUser(dto);
+	}
+	
+	@Override
+	public int insertJoinClient(Client_onDTO dto) {
+		// TODO Auto-generated method stub
+		return memberDAO.insertJoinClient(dto);
 	}
 
 	@Override

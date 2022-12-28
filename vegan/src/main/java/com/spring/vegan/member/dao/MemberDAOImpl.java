@@ -129,31 +129,32 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int chargePoint(Card_payDTO card_payDTO, int u_point) {
+	public int chargePoint(Card_payDTO card_payDTO, int point, String user_category) {
 		int result = 0;
 		try {
 			result = sqlSession.insert("mapper.member.insertCardPay", card_payDTO);
 
 			if ( result == 1 ) {
-				System.out.println("insertCardPay result: " + result);
 				card_payDTO = sqlSession.selectOne("mapper.member.selectCardPay",card_payDTO.getEmail());
 
 				PointDTO pointDTO = new PointDTO();
 				pointDTO.setEmail(card_payDTO.getEmail());
 				pointDTO.setPoint_change(card_payDTO.getCard_price());
-				pointDTO.setPoint_rest(u_point + card_payDTO.getCard_price());
+				pointDTO.setPoint_rest(point + card_payDTO.getCard_price());
 				pointDTO.setPoint_history("C");
 				pointDTO.setPoint_detail(card_payDTO.getPoint_detail());
 
 				result = sqlSession.insert("mapper.member.insertPoint", pointDTO);
+				
 				if ( result == 1 ) {
-					System.out.println("insertPoint result: " + result);
-					result = sqlSession.update("mapper.member.updateU_point", pointDTO);
-					System.out.println("updateU_point result: " + result);
-					if ( result != 1 ) {
+					if ( user_category.equals("user") ) {
+						result = sqlSession.update("mapper.member.updateU_point", pointDTO);
+					} else if ( user_category.equals("client") ) {
 						result = sqlSession.update("mapper.member.updateC_point", pointDTO);
-						System.out.println("updateC_point result: " + result);
 					}
+					
+				} else {
+					return 0;
 				}
 			}
 		} catch (Exception e) {
@@ -164,11 +165,10 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<PointDTO> selectPointList(String u_email) {
+	public List<PointDTO> selectPointList(String email) {
 		List<PointDTO> list = new ArrayList<PointDTO>();
-
 		try {
-			list = sqlSession.selectList("mapper.member.selectPointList", u_email);
+			list = sqlSession.selectList("mapper.member.selectPointList", email);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -197,6 +197,15 @@ public class MemberDAOImpl implements MemberDAO {
 
 		try {
 			result = sqlSession.selectOne("mapper.member.duplicate_email", input_email);
+			if ( result == "true" ) { // user_on 에 없는 아이디인 경우
+				result = sqlSession.selectOne("mapper.member.duplicate_email_c", input_email);
+				if ( result == "true" ) { // client_on 에도 없는 아이디인 경우
+					return result;
+				}
+			} else { // user_on에 있는 아이디면 return false
+				return result;
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -218,17 +227,36 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int certifEmail(String u_email) {
+	public int certifEmail(String email) {
 		int result = 0;
 		try {
-			String u_auth = sqlSession.selectOne("mapper.member.selectU_auth", u_email);
-			if ( u_auth.equals("N") ) {
-				result = sqlSession.update("mapper.member.updateU_auth", u_email);
-			} else if ( u_auth.equals("Y") ){
-				result = 999;
+			// user_on
+			String u_auth = sqlSession.selectOne("mapper.member.selectU_auth", email);
+			if ( u_auth != null ) {
+				if ( u_auth.equals("A") ) {
+					result = sqlSession.update("mapper.member.updateU_auth", email);
+				} else if ( u_auth.equals("B") ){ // 이미 인증된 계정
+					result = 999;
+				} else if ( u_auth.equals("C") ) { // 비활성화된 계정
+					result = 888;
+				}
+			} else {
+				// client_on
+				String c_auth = sqlSession.selectOne("mapper.member.selectC_auth", email);
+				if ( c_auth != null ) {
+					if ( c_auth.equals("A") ) {
+						result = sqlSession.update("mapper.member.updateC_auth", email);
+					} else if ( c_auth.equals("B") ){ // 이미 인증된 계정
+						result = 999;
+					} else if ( c_auth.equals("C") ) { // 비활성화된 계정
+						result = 888;
+					}
+				}
 			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
 		return result;
@@ -246,6 +274,18 @@ public class MemberDAOImpl implements MemberDAO {
 				dto.setU_lvl("");
 			}
 			result = sqlSession.insert("mapper.member.insertJoinUser", dto);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	@Override
+	public int insertJoinClient(Client_onDTO dto) {
+		int result = 0;
+		// TODO Auto-generated method stub
+		try {
+			result = sqlSession.insert("mapper.member.insertJoinClient", dto);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

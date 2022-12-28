@@ -17,14 +17,13 @@ window.onload = function () {
 	btn_charge.addEventListener('click', validation);
 
 	function validation() {	
-		
 		if ( input_point.value < 10000 ) {
 			alert('1만원 이상부터 충전 가능합니다.');
 			input_point.focus();
 			return;
 		}
 
-		if ( input_point.value > 1000000 ) {
+		if ( input_point.value > 100000 ) {
 			alert('충전할 금액을 한 번 더 확인해 주세요.');
 			input_point.focus();
 			return;
@@ -83,8 +82,31 @@ window.onload = function () {
 			card_regiNum.focus();
 			return;
 		}
+		
+		if ( input_point.value >= 10000 ) {
+			if ( card_sort[0].checked == true || card_sort[1].checked == true ) {
+				if ( card_no1.value.substr(3) != "" ) {
+					if ( card_no2.value.substr(3) != "" ) {
+						if ( card_no3.value.substr(3) != "" ) {
+							if ( card_no4.value.substr(3) != "" ) {
+								if ( card_valid_m.value != '선택' ) {
+									if ( card_month.value != '선택' ) {
+										if ( card_pwd.value.substr(1) != "" ) {
+											if ( card_regiNum.value.substr(5) != "" ) {
+												frmCharge.action = "/vegan/member/mypoint.do?command=charge";
+												frmCharge.submit();
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 				
-	};		
+	}
 };
 
 

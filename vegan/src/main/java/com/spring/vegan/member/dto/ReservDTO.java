@@ -26,6 +26,9 @@ public class ReservDTO {
 	private int reserv_deposit;
 	private String reserv_condition;
 	private Date reserv_change;
+	private String resto_name;
+	private String resto_addr;
+	private String c_email;
 	
 	public String getU_email() {
 		return u_email;
@@ -80,6 +83,24 @@ public class ReservDTO {
 	}
 	public void setReserv_change(Date reserv_change) {
 		this.reserv_change = reserv_change;
+	}
+	public String getResto_name() {
+		return resto_name;
+	}
+	public void setResto_name(String resto_name) {
+		this.resto_name = resto_name;
+	}
+	public String getResto_addr() {
+		return resto_addr;
+	}
+	public void setResto_addr(String resto_addr) {
+		this.resto_addr = resto_addr;
+	}
+	public String getC_email() {
+		return c_email;
+	}
+	public void setC_email(String c_email) {
+		this.c_email = c_email;
 	}
 
 }

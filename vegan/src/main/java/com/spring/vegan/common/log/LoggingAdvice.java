@@ -13,14 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-@Aspect
+@Aspect // 필요하면 주석 해제해서 쓰면 됨
 public class LoggingAdvice {
 	private static final Logger logger = LoggerFactory.getLogger(LoggingAdvice.class);
 
-	@Before("execution(* com.spring.vegan.*.service.*.*(..)) or "
+	@Before("execution(* com.spring.vegan.*.controller.*.*(..)) or "
 			+ "execution(* com.spring.vegan.*.dao.*.*(..))")
 	public void startLog(JoinPoint jp) {
-		logger.info("---------------------------------------");
 		logger.info("---------------------------------------");
 		logger.info("@Before");
 		// 전달되는 모든 파라미터들을 Object의 배열로 가져온다.
@@ -36,10 +35,8 @@ public class LoggingAdvice {
 	}
 
 
-	@After("execution(* com.spring.vegan.member.service.*.*(..)) or "
-			+ "execution(* com.spring.vegan.member.dao.*.*(..))")
+	//@After("execution(* com.spring.vegan.member.service.*.*(..)) or execution(* com.spring.vegan.member.dao.*.*(..))")
 	public void AfterLog(JoinPoint jp) {
-		logger.info("---------------------------------------");
 		logger.info("---------------------------------------");
 		logger.info("@After");
 
@@ -55,8 +52,7 @@ public class LoggingAdvice {
 		logger.info("4. advice Object : " + jp.getThis().toString());
 	}
 
-	@Around("execution(* com.spring.vegan.*.service.*.*(..)) or "
-			+ "execution(* com.spring.vegan.*.dao.*.*(..))")
+	//@Around("execution(* com.spring.vegan.*.service.*.*(..)) or execution(* com.spring.vegan.*.dao.*.*(..))")
 	public Object timeLog(ProceedingJoinPoint pjp) throws Throwable {
 		long startTime = System.currentTimeMillis();
 

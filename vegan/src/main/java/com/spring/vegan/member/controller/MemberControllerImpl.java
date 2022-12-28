@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +47,10 @@ import com.spring.vegan.member.dto.Iq_ReplyDTO;
 
 @Controller
 @EnableAsync // @EnableAsync 를 지정해서 메서드를 호출할 경우 비동기로 동작하게 하는 @Async 기능 사용 가능
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MemberControllerImpl implements MemberController {
+	private static final Logger logger = LogManager.getLogger(MemberControllerImpl.class);
 	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
-	
-	private static final Logger logger = LoggerFactory.getLogger(MemberControllerImpl.class);
-	
 	
 	@Autowired
 	private MemberService memberService;
@@ -62,7 +62,7 @@ public class MemberControllerImpl implements MemberController {
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse resoponse) throws Exception {
 		String viewName = "/member/loginForm";
 		ModelAndView mav = new ModelAndView(viewName);
-
+		logger.info("public ModelAndView " + Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
 		return mav;
 	}
 
@@ -155,20 +155,7 @@ public class MemberControllerImpl implements MemberController {
 				mav.addObject("result", "loginFailed");
 			}
 		}
-			
-			// mav.setViewName("redirect:" + viewName);
-			// 로그인 실패했을 경우 비활성화된 계정인지 확인
-//			String u_email_off = memberService.selectU_email_off(request.getParameter("email"));
-//			if ( u_email_off != null ) {
-//				// 비활성화된 계정임이 확인됨
-//				viewName = "/member/proc";
-//				mav.addObject("result", "user_off");
-//				mav.addObject("u_email_off", u_email_off);
-//			} else {
-				// 등록된 적 없는 계정
-				
-//			}
-//		}
+
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -265,16 +252,34 @@ public class MemberControllerImpl implements MemberController {
 		// 1. user_on 테이블에서 where u_email = #{u_email } 로 포인트 잔액 가져오기
 		// 2. point 테이블에서 포인트 충전 및 사용 내역 가져오기
 		ModelAndView mav = new ModelAndView();		
-		String command = request.getParameter("command");
-		User_onDTO user_onDTO = (User_onDTO) request.getSession().getAttribute("user_onDTO");
-		String u_email = user_onDTO.getU_email();
-		int u_point = user_onDTO.getU_point();
 		String viewName = null;
 		
-		if ( command == null ) { 
-			
-			
-		} else if ( command.equals("charge") ) { // 포인트 충전
+		String user_categoty = request.getParameter("user_categoty");
+		String command = request.getParameter("command");
+		
+		User_onDTO user_onDTO = null;
+		Client_onDTO client_onDTO = null;
+		String email = null;
+		int point = 0;
+		
+		if ( command.equals("frmCharge") && user_categoty == null ) {
+			viewName = "/member/chargePoint";
+			// command == frmCharge
+		} else if ( user_categoty.equals("user") ) {
+			user_onDTO = (User_onDTO) request.getSession().getAttribute("user_onDTO");
+			email = user_onDTO.getU_email();
+			point = user_onDTO.getU_point();
+		} else if ( user_categoty.equals("client") ) {
+			client_onDTO = (Client_onDTO) request.getSession().getAttribute("client_onDTO");
+			email = client_onDTO.getC_email();
+			point = client_onDTO.getC_point();
+		} else {
+			mav.addObject("authNull","로그인 후 이용해 주세요.");
+			mav.setViewName("/member/login");
+			return mav;
+		}
+		
+		if ( command.equals("charge") ) { // 포인트 충전
 			int input_point = Integer.parseInt(request.getParameter("input_point"));
 			String card_sort = request.getParameter("card_sort");
 			String card_no = request.getParameter("card_no1") + request.getParameter("card_no2") + request.getParameter("card_no3") + request.getParameter("card_no4");
@@ -292,109 +297,42 @@ public class MemberControllerImpl implements MemberController {
 			String card_regiNum = request.getParameter("card_regiNum");
 			
 			Card_payDTO card_payDTO = new Card_payDTO();
-			card_payDTO.setEmail(u_email);
+			card_payDTO.setEmail(email);
 			card_payDTO.setCard_no(card_no);
 			card_payDTO.setCard_valid(card_valid);
 			card_payDTO.setCard_month(card_month);
 			card_payDTO.setCard_pwd(card_pwd);
 			card_payDTO.setCard_regiNum(card_regiNum);
 			card_payDTO.setCard_price(input_point);
-			int result = memberService.chargePoint(card_payDTO, u_point);
-			
+			int result = memberService.chargePoint(card_payDTO, point, user_categoty);
+			logger.info("result: " + result);
 			if ( result == 1 ) {
 				// 포인트 충전 성공
-				request.getSession().setAttribute("user_onDTO", user_onDTO);
+				if ( user_categoty.equals("user") ) {
+					user_onDTO = memberService.selectMemberInfo(email);
+					request.getSession().setAttribute("user_onDTO", user_onDTO);
+				} else if ( user_categoty.equals("client") ) {
+					client_onDTO = memberService.selectMemberInfo_c(email);
+					request.getSession().setAttribute("client_onDTO", client_onDTO);
+				}
 				mav.addObject("charge_point", "포인트가 충전되었습니다.");
-				
 				viewName = "/member/mypage_main";
 			} else {
-				// 포인트 충전 실패
+				// 포인트 충전 실패, return 0 일 때
 				mav.addObject("charge_point", "에러가 발생했습니다. 관리자에게 문의하세요.");
 				viewName = "/member/mypage_main";
 			}
+			// command == charge
 			
 		} else if ( command.equals("list") ) {
 			// 세션에 있는 이메일로 해당 사용자의 포인트 사용내역 리스트 출력
-			List<PointDTO> pointList = memberService.pointList(u_email);
+			List<PointDTO> pointList = memberService.pointList(email);
 			mav.addObject("pointList", pointList);
 			viewName = "/member/mypoint_list";
-		} else if ( command.equals("frmCharge") ) {
-			viewName = "/member/chargePoint";
+			// command == list
+			
 		}
-		// 업데이트 된 user_onDTO 다시 가져와서 세션에 담고  
-//		client_onDTO = memberService.selectMemberInfo_c(client_onDTO.getC_email());
-//		request.getSession().setAttribute("client_onDTO", client_onDTO);
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/member/mypoint_c.do")
-	public ModelAndView mypoint_c(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		// 포인트 관리 - 잔액, 충전, 충전 및 사용 내역
-		// 1. client_on 테이블에서 where c_email = #{c_email } 로 포인트 잔액 가져오기
-		// 2. point 테이블에서 포인트 충전 및 사용 내역 가져오기
-		ModelAndView mav = new ModelAndView();		
-		String viewName = null;
-		String command = request.getParameter("command");
-		Client_onDTO client_onDTO = (Client_onDTO) request.getSession().getAttribute("client_onDTO");
-		String c_email = client_onDTO.getC_email();
-		int c_point = client_onDTO.getC_point();
 		
-		if ( command == null ) {
-			
-		} else if ( command.equals("charge") ) { // 포인트 충전
-			int input_point = Integer.parseInt(request.getParameter("input_point"));
-			String card_sort = request.getParameter("card_sort");
-			String card_no = request.getParameter("card_no1") + request.getParameter("card_no2") + request.getParameter("card_no3") + request.getParameter("card_no4");
-			
-			String card_valid = null;
-			int card_valid_m = Integer.parseInt(request.getParameter("card_valid_m"));
-			String card_valid_y = request.getParameter("card_valid_y").substring(2);
-			if ( card_valid_m > 0 || card_valid_m < 10 ) {
-				card_valid = "0" + request.getParameter("card_valid_m") + card_valid_y;
-			} else {
-				card_valid = request.getParameter("card_valid_m") + card_valid_y;
-			}
-			
-			int card_month = Integer.parseInt(request.getParameter("card_month"));
-			String card_pwd = request.getParameter("card_pwd");
-			String card_regiNum = request.getParameter("card_regiNum");
-			
-			Card_payDTO card_payDTO = new Card_payDTO();
-			card_payDTO.setEmail(c_email);
-			card_payDTO.setCard_no(card_no);
-			card_payDTO.setCard_valid(card_valid);
-			card_payDTO.setCard_month(card_month);
-			card_payDTO.setCard_pwd(card_pwd);
-			card_payDTO.setCard_regiNum(card_regiNum);
-			card_payDTO.setCard_price(input_point);
-			int result = memberService.chargePoint(card_payDTO, c_point);
-			
-			if ( result == 1 ) {
-				// 포인트 충전 성공
-				request.getSession().setAttribute("client_onDTO", client_onDTO);
-				mav.addObject("charge_point", "포인트가 충전되었습니다.");
-				
-				viewName = "/member/mypage_main";
-			} else {
-				// 포인트 충전 실패
-				mav.addObject("charge_point", "에러가 발생했습니다. 관리자에게 문의하세요.");
-				viewName = "/member/mypage_main";
-			}
-			
-		} else if ( command.equals("list") ) {
-			// 세션에 있는 이메일로 해당 사용자의 포인트 사용내역 리스트 출력
-			List<PointDTO> pointList = memberService.pointList(c_email);
-			mav.addObject("pointList", pointList);
-			viewName = "/member/mypoint_list";
-		} else if ( command.equals("frmCharge") ) {
-			viewName = "/member/chargePoint";
-		}
-		// 업데이트 된 user_onDTO 다시 가져와서 세션에 담고  
-		client_onDTO = memberService.selectMemberInfo_c(client_onDTO.getC_email());
-		request.getSession().setAttribute("client_onDTO", client_onDTO);
 		mav.setViewName(viewName);
 		return mav;
 	}
@@ -458,25 +396,37 @@ public class MemberControllerImpl implements MemberController {
 
 	@Override
 	@RequestMapping(value="/member/joinProc.do", method = RequestMethod.POST)
-	public ModelAndView joinProc(String input_email, String input_pwd_r, String input_name, String input_nick,
+	public ModelAndView joinProc(String certify, String regiNum, String input_email, String input_pwd_r, String input_name, String input_nick,
 			String input_tel, String input_addr, String input_lvl) throws Exception {
 		// TODO Auto-generated method stub
 		String viewName = null;
+		int result = 0;
 		ModelAndView mav = new ModelAndView();
-		User_onDTO dto = new User_onDTO();
-		dto.setU_email(input_email);
-		dto.setU_pwd(input_pwd_r);
-		dto.setU_name(input_name);
-		dto.setU_nick(input_nick);
-		dto.setU_tel(input_tel);
-		dto.setU_lvl(input_lvl);
-		dto.setU_addr(input_addr);
 		
-		int result = memberService.insertJoinUser(dto);
+		if ( regiNum != null && certify != null ) {
+			Client_onDTO client_onDTO = new Client_onDTO();
+			client_onDTO.setC_email(input_email);
+			client_onDTO.setC_pwd(input_pwd_r);
+			client_onDTO.setC_name(input_name);
+			client_onDTO.setC_tel(input_tel);
+			client_onDTO.setRegiNum(regiNum);
+			client_onDTO.setCertify(certify);
+			result = memberService.insertJoinClient(client_onDTO);
+		} else {
+			User_onDTO user_onDTO = new User_onDTO();
+			user_onDTO.setU_email(input_email);
+			user_onDTO.setU_pwd(input_pwd_r);
+			user_onDTO.setU_name(input_name);
+			user_onDTO.setU_nick(input_nick);
+			user_onDTO.setU_tel(input_tel);
+			user_onDTO.setU_lvl(input_lvl);
+			user_onDTO.setU_addr(input_addr);
+			result = memberService.insertJoinUser(user_onDTO);
+		}
 		if ( result == 1 ) {
 			// DB 에 데이터가 정상적으로 저장된 경우
 			// 인증 이메일 보내고 성공하면 화면 전환
-			sendEmail(input_email, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?email=", input_name,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");
+			sendEmail(input_name, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?email=", input_email,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");
 			viewName = "/member/proc";
 			mav.addObject("joinProc", true);
 			mav.addObject("input_email", input_email);
@@ -510,11 +460,12 @@ public class MemberControllerImpl implements MemberController {
 		// sendEmail(input_email, "아래 링크를 클릭해 이메일 주소를 인증해 주세요.", "/certifEmail?u_email=", input_name,  "이메일 인증하기", "[베지테이블] 회원가입을 위해 이메일을 인증해 주세요.");	
 		StringBuffer sb = new StringBuffer();
 		sb.append("<html><head><meta charset='UTF-8'></head>");
-		sb.append("<body><p>" + input_name +"님, 안녕하세요.</p>");
+		sb.append("<body><p>" + input_name +" 님, 안녕하세요.</p>");
 		sb.append("<p>" + message + "</p>");
 		sb.append("<a href='http://localhost:8090/vegan/member" + url + input_email + "'>" + procName + "</a>");
 		sb.append("</body></html>");
-		
+		logger.info("input_name: " + input_name);
+		logger.info("input_email: " + input_email);
 		String content = sb.toString();
 		
 		// memberService 의 sendAuthMail 메서드로 주소, 제목, 내용을 전달
@@ -525,20 +476,23 @@ public class MemberControllerImpl implements MemberController {
 	}
 
 	@Override
-	@RequestMapping(value="/member/certifEmail") // 사용자가 수신한 인증 이메일을 클릭한 경우 u_auth 값을 'Y'로 업데이트하는 메서드
+	@RequestMapping(value="/member/certifEmail") // 사용자가 수신한 인증 이메일을 클릭한 경우 u_auth 값을 'B'로 업데이트하는 메서드
 	public ModelAndView certifEmail(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = null;
 		ModelAndView mav = new ModelAndView();		
-		String u_email = request.getParameter("u_email");
-		int result = memberService.certifEmail(u_email);
+		String email = request.getParameter("email");
+		int result = memberService.certifEmail(email);
 		
 		if ( result == 1 ) {
-			// u_auth 컬럼값 Y로 변경됨 -> 로그인 시 서비스 이용 가능
-			mav.addObject("certifEmail", true);
+			// u_auth 컬럼값 B로 변경됨 -> 로그인 시 서비스 이용 가능
+			mav.addObject("certifEmail", 1);
 			
 		} else if ( result == 999 ) {
 			// 이미 인증된 계정
-			mav.addObject("certifEmail", false);
+			mav.addObject("certifEmail", 999);
+		} else if ( result == 888 ) {
+			// 비활성화된 계정
+			mav.addObject("certifEmail", 888);
 		}
 		viewName = "/member/proc";
 		mav.setViewName(viewName);

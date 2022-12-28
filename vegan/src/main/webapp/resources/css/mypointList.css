@@ -34,17 +34,14 @@
 .pointDiv {
     margin-top: 20px;
 }
-
-.div1 {
-    float:left;
+h6 {
+	text-align: center;
 }
-
-.div2 {
-    float:right;
+.pointDate {
+	color: #555;
 }
-
 .pointChange {
-    margin-top: 10px;
+    float:right;
 }
 
 hr {

@@ -24,8 +24,8 @@ public interface MemberService {
 	public User_onDTO selectMemberInfo(String u_email); // mypage 사용자 정보 출력
 	public List<User_onDTO> listMemberInfo_u(); // admin에서 회원 정보 조회
 	public List<Client_onDTO> listMemberInfo_c(); // admin에서 회원 정보 조회
-	public int chargePoint(Card_payDTO card_payDTO, int u_point); // 포인트 충전
-	public List<PointDTO> pointList(String u_email);
+	public int chargePoint(Card_payDTO card_payDTO, int point, String user_categoty); // 포인트 충전
+	public List<PointDTO> pointList(String email);
 	public int payPoint(PointDTO pointDTO, User_onDTO user_onDTO);
 	public String duplicate_email(String input_email);
 	public String duplicate_nick(String input_nick);
@@ -33,6 +33,7 @@ public interface MemberService {
 	//public void sendPreConfiguredMail(String message); // xml에 저장된 내용으로 메일 전송
 	public int certifEmail(String u_email);
 	public int insertJoinUser(User_onDTO dto);
+	public int insertJoinClient(Client_onDTO client_onDTO);
 	public int updateModifyUser(User_onDTO dto);
 	public int selectReservCondition(String u_email);
 	public int deleteMemberInfo(User_onDTO user_onDTO);
@@ -54,4 +55,5 @@ public interface MemberService {
 	public void reply(Map<String, Object> articleMap);
 	public List<Iq_ReplyDTO> replyInquery(int reply_iq_no);
 	public List<Com_HeartDTO> heartInfo(String u_email);
+	
 }

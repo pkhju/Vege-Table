@@ -136,33 +136,33 @@ window.onload = function () {
 			// 중복확인이 완료되지 않은 경우
 			alert("이메일 입력 및 중복확인이 필요합니다.");
 			frmJoin.input_email.focus();
-               return;
+			return;
 		}
 		if ( pwd == "" || pwd == null ) {
 			alert("비밀번호를 입력해 주세요.");
 			frmJoin.input_pwd.focus();
-               return;
+			return;
 		}
 		if ( st_txt_pwd_t != 'block' ) {
 			alert("비밀번호가 일치하지 않습니다.");
 			frmJoin.input_pwd_r.focus();
-               return;
+			return;
 		}
 		if ( name == "" || name == null ) {
-			alert("이름을 입력해 주세요");
+			alert("이름을 입력해 주세요.");
 			frmJoin.input_name.focus();
-               return;
+			return;
 		}
 		if ( st_txt_nick_t != 'block') {
 			// 중복확인이 완료되지 않은 경우
 			alert("닉네임 입력 및 중복확인이 필요합니다.");
 			frmJoin.input_nick.focus();
-               return;
+			return;
 		}
 		if ( tel == "" || tel == null ) {
 			alert("휴대폰번호를 입력해 주세요");
 			frmJoin.input_tel.focus();
-               return;
+			return;
 		}
 	
 		if ( st_txt_email_t == 'block' ) {

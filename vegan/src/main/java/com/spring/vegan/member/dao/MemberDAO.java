@@ -23,13 +23,14 @@ public interface MemberDAO {
 	public User_onDTO selectMemberInfo(String u_email);
 	public List<User_onDTO> listMemberInfo_u();
 	public List<Client_onDTO> listMemberInfo_c();
-	public int chargePoint(Card_payDTO card_payDTO, int u_point);
-	public List<PointDTO> selectPointList(String u_email);
+	public int chargePoint(Card_payDTO card_payDTO, int point, String user_category);
+	public List<PointDTO> selectPointList(String email);
 	public int payPoint(PointDTO pointDTO, User_onDTO user_onDTO);
 	public String duplicate_email(String input_email);
 	public String duplicate_nick(String input_nick);
 	public int certifEmail(String u_email);
 	public int insertJoinUser(User_onDTO dto);
+	public int insertJoinClient(Client_onDTO dto);
 	public int updateModifyUser(User_onDTO dto);
 	public int selectReservCondition(String u_email);
 	public int deleteMemberInfo(User_onDTO user_onDTO);
