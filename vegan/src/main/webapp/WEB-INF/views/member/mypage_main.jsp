@@ -16,7 +16,8 @@
 	crossorigin="anonymous">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="${path }/resources/css/common.css">
-<link rel="stylesheet" href="${path }/resources/css/mypage_main.css">
+<link rel="stylesheet" href="${path }/resources/css/mypage_main.css?ver=1">
+<!-- 서버 재시작 했는데도 css나 js 반영 안될 때 ?ver=1 붙이면 됨 -->
 
 <c:if test="${user_onDTO == null && client_onDTO == null }">
 	<script src="<c:url value='/resources/script/noSession.js' />"></script>
