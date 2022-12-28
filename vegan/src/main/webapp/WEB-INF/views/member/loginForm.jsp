@@ -144,6 +144,11 @@
 			alert("이메일 또는 비밀번호가 일치하지 않습니다.");
 		</script>
     </c:if>
+    <c:if test="${authNull != null }">
+		<script type="text/javascript">
+			alert("${authNull }");
+		</script>
+    </c:if>
 	
 </body>
 

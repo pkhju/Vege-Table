@@ -252,16 +252,34 @@ public class MemberControllerImpl implements MemberController {
 		// 1. user_on 테이블에서 where u_email = #{u_email } 로 포인트 잔액 가져오기
 		// 2. point 테이블에서 포인트 충전 및 사용 내역 가져오기
 		ModelAndView mav = new ModelAndView();		
-		String command = request.getParameter("command");
-		User_onDTO user_onDTO = (User_onDTO) request.getSession().getAttribute("user_onDTO");
-		String u_email = user_onDTO.getU_email();
-		int u_point = user_onDTO.getU_point();
 		String viewName = null;
 		
-		if ( command == null ) { 
-			
-			
-		} else if ( command.equals("charge") ) { // 포인트 충전
+		String user_categoty = request.getParameter("user_categoty");
+		String command = request.getParameter("command");
+		
+		User_onDTO user_onDTO = null;
+		Client_onDTO client_onDTO = null;
+		String email = null;
+		int point = 0;
+		
+		if ( command.equals("frmCharge") && user_categoty == null ) {
+			viewName = "/member/chargePoint";
+			// command == frmCharge
+		} else if ( user_categoty.equals("user") ) {
+			user_onDTO = (User_onDTO) request.getSession().getAttribute("user_onDTO");
+			email = user_onDTO.getU_email();
+			point = user_onDTO.getU_point();
+		} else if ( user_categoty.equals("client") ) {
+			client_onDTO = (Client_onDTO) request.getSession().getAttribute("client_onDTO");
+			email = client_onDTO.getC_email();
+			point = client_onDTO.getC_point();
+		} else {
+			mav.addObject("authNull","로그인 후 이용해 주세요.");
+			mav.setViewName("/member/login");
+			return mav;
+		}
+		
+		if ( command.equals("charge") ) { // 포인트 충전
 			int input_point = Integer.parseInt(request.getParameter("input_point"));
 			String card_sort = request.getParameter("card_sort");
 			String card_no = request.getParameter("card_no1") + request.getParameter("card_no2") + request.getParameter("card_no3") + request.getParameter("card_no4");
@@ -279,109 +297,40 @@ public class MemberControllerImpl implements MemberController {
 			String card_regiNum = request.getParameter("card_regiNum");
 			
 			Card_payDTO card_payDTO = new Card_payDTO();
-			card_payDTO.setEmail(u_email);
+			card_payDTO.setEmail(email);
 			card_payDTO.setCard_no(card_no);
 			card_payDTO.setCard_valid(card_valid);
 			card_payDTO.setCard_month(card_month);
 			card_payDTO.setCard_pwd(card_pwd);
 			card_payDTO.setCard_regiNum(card_regiNum);
 			card_payDTO.setCard_price(input_point);
-			int result = memberService.chargePoint(card_payDTO, u_point);
-			
+			int result = memberService.chargePoint(card_payDTO, point, user_categoty);
+			logger.info("result: " + result);
 			if ( result == 1 ) {
 				// 포인트 충전 성공
-				request.getSession().setAttribute("user_onDTO", user_onDTO);
+				if ( user_categoty.equals("user") ) {
+					request.getSession().setAttribute("user_onDTO", user_onDTO);
+				} else if ( user_categoty.equals("client") ) {
+					request.getSession().setAttribute("client_onDTO", client_onDTO);
+				}
 				mav.addObject("charge_point", "포인트가 충전되었습니다.");
-				
 				viewName = "/member/mypage_main";
 			} else {
-				// 포인트 충전 실패
+				// 포인트 충전 실패, return 0 일 때
 				mav.addObject("charge_point", "에러가 발생했습니다. 관리자에게 문의하세요.");
 				viewName = "/member/mypage_main";
 			}
+			// command == charge
 			
 		} else if ( command.equals("list") ) {
 			// 세션에 있는 이메일로 해당 사용자의 포인트 사용내역 리스트 출력
-			List<PointDTO> pointList = memberService.pointList(u_email);
+			List<PointDTO> pointList = memberService.pointList(email);
 			mav.addObject("pointList", pointList);
 			viewName = "/member/mypoint_list";
-		} else if ( command.equals("frmCharge") ) {
-			viewName = "/member/chargePoint";
+			// command == list
+			
 		}
-		// 업데이트 된 user_onDTO 다시 가져와서 세션에 담고  
-//		client_onDTO = memberService.selectMemberInfo_c(client_onDTO.getC_email());
-//		request.getSession().setAttribute("client_onDTO", client_onDTO);
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
-	@Override
-	@RequestMapping(value = "/member/mypoint_c.do")
-	public ModelAndView mypoint_c(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("UTF-8");
-		// 포인트 관리 - 잔액, 충전, 충전 및 사용 내역
-		// 1. client_on 테이블에서 where c_email = #{c_email } 로 포인트 잔액 가져오기
-		// 2. point 테이블에서 포인트 충전 및 사용 내역 가져오기
-		ModelAndView mav = new ModelAndView();		
-		String viewName = null;
-		String command = request.getParameter("command");
-		Client_onDTO client_onDTO = (Client_onDTO) request.getSession().getAttribute("client_onDTO");
-		String c_email = client_onDTO.getC_email();
-		int c_point = client_onDTO.getC_point();
 		
-		if ( command == null ) {
-			
-		} else if ( command.equals("charge") ) { // 포인트 충전
-			int input_point = Integer.parseInt(request.getParameter("input_point"));
-			String card_sort = request.getParameter("card_sort");
-			String card_no = request.getParameter("card_no1") + request.getParameter("card_no2") + request.getParameter("card_no3") + request.getParameter("card_no4");
-			
-			String card_valid = null;
-			int card_valid_m = Integer.parseInt(request.getParameter("card_valid_m"));
-			String card_valid_y = request.getParameter("card_valid_y").substring(2);
-			if ( card_valid_m > 0 || card_valid_m < 10 ) {
-				card_valid = "0" + request.getParameter("card_valid_m") + card_valid_y;
-			} else {
-				card_valid = request.getParameter("card_valid_m") + card_valid_y;
-			}
-			
-			int card_month = Integer.parseInt(request.getParameter("card_month"));
-			String card_pwd = request.getParameter("card_pwd");
-			String card_regiNum = request.getParameter("card_regiNum");
-			
-			Card_payDTO card_payDTO = new Card_payDTO();
-			card_payDTO.setEmail(c_email);
-			card_payDTO.setCard_no(card_no);
-			card_payDTO.setCard_valid(card_valid);
-			card_payDTO.setCard_month(card_month);
-			card_payDTO.setCard_pwd(card_pwd);
-			card_payDTO.setCard_regiNum(card_regiNum);
-			card_payDTO.setCard_price(input_point);
-			int result = memberService.chargePoint(card_payDTO, c_point);
-			
-			if ( result == 1 ) {
-				// 포인트 충전 성공
-				request.getSession().setAttribute("client_onDTO", client_onDTO);
-				mav.addObject("charge_point", "포인트가 충전되었습니다.");
-				
-				viewName = "/member/mypage_main";
-			} else {
-				// 포인트 충전 실패
-				mav.addObject("charge_point", "에러가 발생했습니다. 관리자에게 문의하세요.");
-				viewName = "/member/mypage_main";
-			}
-			
-		} else if ( command.equals("list") ) {
-			// 세션에 있는 이메일로 해당 사용자의 포인트 사용내역 리스트 출력
-			List<PointDTO> pointList = memberService.pointList(c_email);
-			mav.addObject("pointList", pointList);
-			viewName = "/member/mypoint_list";
-		} else if ( command.equals("frmCharge") ) {
-			viewName = "/member/chargePoint";
-		}
-		// 업데이트 된 user_onDTO 다시 가져와서 세션에 담고  
-		client_onDTO = memberService.selectMemberInfo_c(client_onDTO.getC_email());
-		request.getSession().setAttribute("client_onDTO", client_onDTO);
 		mav.setViewName(viewName);
 		return mav;
 	}

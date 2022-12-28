@@ -19,12 +19,7 @@
 <link rel="stylesheet" href="${path }/resources/css/mypage_main.css">
 
 <c:if test="${user_onDTO == null && client_onDTO == null }">
-	<script type="text/javascript">
-		window.onload = function() {
-			alert('로그인이 필요한 페이지 입니다.');
-			location.href = '${path}/member/login';
-		}
-	</script>
+	<script src="<c:url value='/resources/script/noSession.js' />"></script>
 </c:if>
 <c:if test="${modProc != null }">
 	<script type="text/javascript">
@@ -54,13 +49,9 @@
 						<h3>${user_onDTO.u_nick }
 							<span class="user_title">[일반회원]</span>
 						</h3>
-						<a href="${path }/member/mypoint.do?command=list"
-						style="text-decoration: none; color: #777">
-						<h5>${user_onDTO.u_point } 포인트</h5>						
+						<a href="${path }/member/mypoint.do?command=list&user_categoty=user" style="text-decoration: none; color: #777">
+							<h5>${user_onDTO.u_point } 포인트</h5>						
 						</a>
-						<button type="button" class="btn btn-success"
-						onClick="location.href='${path }/member/mypoint.do?command=frmCharge'"
-						style="background-color: #55771C; border: none;">포인트 충전</button>
 						
 					</c:if>
 			<!-- user_on 프로필 끝 -->
@@ -71,22 +62,19 @@
 						<h3>${client_onDTO.c_name }
 							<span class="user_title">[사업자회원]</span>
 						</h3>
-						<a href="${path }/member/mypoint_c.do?command=list"
-						style="text-decoration: none; color: #777">
-						<h5>${client_onDTO.c_point } 포인트</h5>
-					</a>
-					<button type="button" class="btn btn-success"
-						onClick="location.href='${path }/member/mypoint_c.do?command=frmCharge'"
-						style="background-color: #55771C; border: none;">포인트 충전</button>
-					<c:if test="${clientLogOn == true and restoExist == false }">
-				
-					<button type="button" class="btn btn-success"
-						onClick="location.href='${path }/resto/addRestoForm.do'" style="background-color: #55771C; border: none;">식당 등록</button>
-					</c:if>
+						<a href="${path }/member/mypoint.do?command=list&user_categoty=client" style="text-decoration: none; color: #777">
+							<h5>${client_onDTO.c_point } 포인트</h5>
+						</a>
+						<!-- 클라이언트가 로그인하고 등록한 식당이 존재하지 않는 경우 식당 등록 버튼 노출 -->	
+						<c:if test="${clientLogOn == true and restoExist == false }">
+							<button type="button" class="btn btn-success"
+								onClick="location.href='${path }/resto/addRestoForm.do'" style="background-color: #55771C; border: none;">식당 등록</button>
+						</c:if>
 					</c:if>
 			<!-- client_on 프로필 끝 --> 
-					<button type="button" class="btn btn-success"
-						onClick="location.href='${path }/member/mypage_info.do'"
+					<button type="button" class="btn btn-success" onClick="location.href='${path }/member/mypoint.do?command=frmCharge'"
+							style="background-color: #55771C; border: none;">포인트 충전</button>
+					<button type="button" class="btn btn-success" onClick="location.href='${path }/member/mypage_info.do'"
 						style="background-color: #55771C; border: none;">회원정보수정</button>
 					</div>
 					

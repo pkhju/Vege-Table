@@ -18,6 +18,9 @@ public class PointDTO {
 	private String point_history; // 포인트 변경 사유, 충전: C, 예약: B, 커뮤니티 글 작성: W, 이벤트 참여: E, 리뷰 작성: R
 	private int point_detail; // 포인트 충전 거래 번호(승인번호)
 	private Date point_date; // 포인트 충전 거래 번호(승인번호)
+	private int reserv_no; // 예약시 포인트 사용한 경우 예약번호 저장
+	private int point_no; // 포인트 사용 내역 번호 (seq)
+	private String resto_name; // 테이블에는 없는데 포인트 사용내역에 업체명 표시하려고 넣음
 	
 	public String getEmail() {
 		return email;
@@ -54,6 +57,12 @@ public class PointDTO {
 	}
 	public void setPoint_date(Date point_date) {
 		this.point_date = point_date;
+	}
+	public String getResto_name() {
+		return resto_name;
+	}
+	public void setResto_name(String resto_name) {
+		this.resto_name = resto_name;
 	}
 
 }

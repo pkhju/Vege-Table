@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.springframework.stereotype.Component;
 
 @Component("card_payDTO")
-public class Card_payDTO {
+public class Card_payDTO { // 포인트 충전 시 카드 승인 내역 저장
 //	create table card_pay (				
 //			email	varchar2(50)	 not null,		-- 유저 이메일주소
 //			card_no	char(16)	 not null,		-- 카드번호

@@ -31,7 +31,7 @@
 					<a href="${path }/member/logout.do" class="aTag">로그아웃</a>
 				</div>
 				<div class="nav-item">
-					<a href="${path }/member/mypage.do" class="aTag">마이페이지</a>
+					<a href="${path }/reservation/reservList.do" class="aTag">내 예약</a>
 				</div>
 				<div class="nav-item header_profile">
 					<a href="${path }/member/mypage.do" class="aTag"><img
@@ -54,7 +54,7 @@
 					<a href="${path }/member/logout.do" class="aTag">로그아웃</a>
 				</div>
 				<div class="nav-item">
-					<a href="${path }/member/mypage.do" class="aTag">마이페이지</a>
+					<a href="${path }/reservation/reservList.do" class="aTag">내 예약</a>
 				</div>
 				<div class="nav-item header_profile">
 					<a href="${path }/member/mypage.do" class="aTag"><img

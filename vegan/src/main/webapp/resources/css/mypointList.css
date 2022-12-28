@@ -34,17 +34,8 @@
 .pointDiv {
     margin-top: 20px;
 }
-
-.div1 {
-    float:left;
-}
-
-.div2 {
-    float:right;
-}
-
 .pointChange {
-    margin-top: 10px;
+    float:right;
 }
 
 hr {

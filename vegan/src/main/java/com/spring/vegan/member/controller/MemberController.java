@@ -25,7 +25,6 @@ public interface MemberController {
 	public ModelAndView logoutProc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView searchProc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView mypoint(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView mypoint_c(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView MemberList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView listMemberInfo(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	//	public ModelAndView reservation(HttpServletRequest request,HttpServletResponse response) throws Exception;

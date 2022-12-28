@@ -129,31 +129,32 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public int chargePoint(Card_payDTO card_payDTO, int u_point) {
+	public int chargePoint(Card_payDTO card_payDTO, int point, String user_category) {
 		int result = 0;
 		try {
 			result = sqlSession.insert("mapper.member.insertCardPay", card_payDTO);
 
 			if ( result == 1 ) {
-				System.out.println("insertCardPay result: " + result);
 				card_payDTO = sqlSession.selectOne("mapper.member.selectCardPay",card_payDTO.getEmail());
 
 				PointDTO pointDTO = new PointDTO();
 				pointDTO.setEmail(card_payDTO.getEmail());
 				pointDTO.setPoint_change(card_payDTO.getCard_price());
-				pointDTO.setPoint_rest(u_point + card_payDTO.getCard_price());
+				pointDTO.setPoint_rest(point + card_payDTO.getCard_price());
 				pointDTO.setPoint_history("C");
 				pointDTO.setPoint_detail(card_payDTO.getPoint_detail());
 
 				result = sqlSession.insert("mapper.member.insertPoint", pointDTO);
+				
 				if ( result == 1 ) {
-					System.out.println("insertPoint result: " + result);
-					result = sqlSession.update("mapper.member.updateU_point", pointDTO);
-					System.out.println("updateU_point result: " + result);
-					if ( result != 1 ) {
+					if ( user_category.equals("user") ) {
+						result = sqlSession.update("mapper.member.updateU_point", pointDTO);
+					} else if ( user_category.equals("client") ) {
 						result = sqlSession.update("mapper.member.updateC_point", pointDTO);
-						System.out.println("updateC_point result: " + result);
 					}
+					
+				} else {
+					return 0;
 				}
 			}
 		} catch (Exception e) {
@@ -164,11 +165,10 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<PointDTO> selectPointList(String u_email) {
+	public List<PointDTO> selectPointList(String email) {
 		List<PointDTO> list = new ArrayList<PointDTO>();
-
 		try {
-			list = sqlSession.selectList("mapper.member.selectPointList", u_email);
+			list = sqlSession.selectList("mapper.member.selectPointList", email);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

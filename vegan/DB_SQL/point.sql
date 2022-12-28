@@ -1,161 +1,20 @@
 -- drop table point;
 
 create table point (
-email varchar2(50) not null,-- ¿Ø¿˙ ¿Ã∏ﬁ¿œ¡÷º“
-point_change number,-- ∆˜¿Œ∆Æ ∫Ø»≠∞™
-point_rest number,-- ≥≤¿∫∆˜¿Œ∆Æ
-point_history char(1),-- ∆˜¿Œ∆Æ ∫Øµø≥ªø™
-point_detail number-- ∆˜¿Œ∆Æ √Ê¿¸ ∞≈∑°π¯»£
+	email varchar2(50) not null,-- ÔøΩÔøΩÔøΩÔøΩ ÔøΩÃ∏ÔøΩÔøΩÔøΩÔøΩ÷ºÔøΩ
+	point_change number,-- ÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩ»≠ÔøΩÔøΩ
+	point_rest number,-- ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ∆Æ
+	point_history char(1),-- ÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ
+	point_detail number-- ÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩ ÔøΩ≈∑ÔøΩÔøΩÔøΩ»£
+	reserv_no number, -- ÏòàÏïΩÏãú Ìè¨Ïù∏Ìä∏ ÏÇ¨Ïö©Ìïú Í≤ΩÏö∞ ÏòàÏïΩÎ≤àÌò∏ Ï†ÄÏû•
+	point_no not null -- Ìè¨Ïù∏Ìä∏ ÏÇ¨Ïö©Ïãú ÏãúÌÄÄÏä§Î°ú Í∏∞Î°ù
 );
--- ∆˜¿Œ∆Æ ∫Øµø≥ªø™ ƒ√∑≥(char) : √Ê¿¸, ªÁøÎ, ƒøπ¬¥œ∆º, ¿Ã∫•∆Æ(∞ÊøÏ¿« ºˆ∞° ¡§«ÿ¡Æ ¿÷¿Ω)
--- √Ê¿¸ ( C ), øπæ‡ ( B ), ƒøπ¬¥œ∆º ±€ ¿€º∫ ( W ), ¿Ã∫•∆Æ ¬¸ø© ( E ), ∏Æ∫‰ ¿€º∫ ( R )
-
-insert into point values('user02@mail.com',-30000,to_date('2022/11/19 15:33:37', 'YYYY/MM/DD HH24:MI:SS'),0,'R',null);
-insert into point values('user03@mail.com',-60000,to_date('2022/11/19 15:33:37', 'YYYY/MM/DD HH24:MI:SS'),40000,'R',null);
-insert into point values('user01@mail.com',20000,to_date('2022/11/23 10:26:41', 'YYYY/MM/DD HH24:MI:SS'),50000,'C',27);
-insert into point values('user01@mail.com',20000,to_date('2022/11/23 10:27:14', 'YYYY/MM/DD HH24:MI:SS'),50000,'C',28);
-insert into point values('user01@mail.com',20000,to_date('2022/11/23 10:28:13', 'YYYY/MM/DD HH24:MI:SS'),50000,'C',29);
-insert into point values('user01@mail.com',20000,to_date('2022/11/23 10:29:37', 'YYYY/MM/DD HH24:MI:SS'),70000,'C',30);
-insert into point values('user01@mail.com',10000,to_date('2022/11/23 10:44:56', 'YYYY/MM/DD HH24:MI:SS'),80000,'C',31);
-insert into point values('user01@mail.com',-30000,to_date('2022/11/23 14:09:21', 'YYYY/MM/DD HH24:MI:SS'),50000,'B',null);
-insert into point values('user01@mail.com',-30000,to_date('2022/11/23 14:21:50', 'YYYY/MM/DD HH24:MI:SS'),20000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:23:31', 'YYYY/MM/DD HH24:MI:SS'),19000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:25:09', 'YYYY/MM/DD HH24:MI:SS'),18000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:26:37', 'YYYY/MM/DD HH24:MI:SS'),17000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:27:40', 'YYYY/MM/DD HH24:MI:SS'),16000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:27:58', 'YYYY/MM/DD HH24:MI:SS'),16000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:28:21', 'YYYY/MM/DD HH24:MI:SS'),16000,'B',null);
-insert into point values('user01@mail.com',10000,to_date('2022/11/23 14:28:51', 'YYYY/MM/DD HH24:MI:SS'),27000,'C',32);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:29:38', 'YYYY/MM/DD HH24:MI:SS'),16000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:33:04', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:33:37', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:36:17', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:36:42', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:36:44', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:27', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:28', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:29', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:29', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:30', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 14:37:30', 'YYYY/MM/DD HH24:MI:SS'),15000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:38:39', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:39:28', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:39:30', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:39:34', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:39:34', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:39:37', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:01', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:02', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:12', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:13', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:14', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:14', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:14', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:15', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:21', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:23', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:25', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:27', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:28', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:29', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:34', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:40:48', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:42:25', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:42:28', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:42:34', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:43:04', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:44:52', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:48:32', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:49:16', 'YYYY/MM/DD HH24:MI:SS'),14000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:49:47', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:51:13', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:51:20', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:53:11', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:53:14', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:55:15', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:55:34', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:55:40', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:56:24', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:56:27', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:56:52', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:00', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:02', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:38', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:42', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:43', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:45', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:57:46', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:58:56', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:59:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:59:44', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user01@mail.com',-1000,to_date('2022/11/23 15:59:47', 'YYYY/MM/DD HH24:MI:SS'),13000,'B',null);
-insert into point values('user04@mail.com',20000,to_date('2022/11/26 13:39:37', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',33);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 13:39:42', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user04@mail.com',20000,to_date('2022/11/26 13:40:17', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',34);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 13:40:24', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:03:43', 'YYYY/MM/DD HH24:MI:SS'),-2000,'B',null);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:04:34', 'YYYY/MM/DD HH24:MI:SS'),-2000,'B',null);
-insert into point values('user04@mail.com',20000,to_date('2022/11/26 14:06:41', 'YYYY/MM/DD HH24:MI:SS'),18000,'C',35);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:07:13', 'YYYY/MM/DD HH24:MI:SS'),-3000,'B',null);
-insert into point values('user04@mail.com',40000,to_date('2022/11/26 14:09:01', 'YYYY/MM/DD HH24:MI:SS'),38000,'C',36);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:11:14', 'YYYY/MM/DD HH24:MI:SS'),37000,'B',null);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:11:30', 'YYYY/MM/DD HH24:MI:SS'),37000,'B',null);
-insert into point values('user03@mail.com',20000,to_date('2022/11/26 14:12:05', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',37);
-insert into point values('user03@mail.com',-1000,to_date('2022/11/26 14:12:10', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user03@mail.com',20000,to_date('2022/11/26 14:12:58', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',38);
-insert into point values('user03@mail.com',-1000,to_date('2022/11/26 14:13:08', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user03@mail.com',-1000,to_date('2022/11/26 14:13:31', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user03@mail.com',-1000,to_date('2022/11/26 14:13:47', 'YYYY/MM/DD HH24:MI:SS'),-1000,'B',null);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:32:03', 'YYYY/MM/DD HH24:MI:SS'),36000,'B',null);
-insert into point values('user04@mail.com',20000,to_date('2022/11/26 14:32:19', 'YYYY/MM/DD HH24:MI:SS'),57000,'C',39);
-insert into point values('user04@mail.com',-1000,to_date('2022/11/26 14:32:23', 'YYYY/MM/DD HH24:MI:SS'),36000,'B',null);
-insert into point values('user03@mail.com',20000,to_date('2022/11/26 14:32:52', 'YYYY/MM/DD HH24:MI:SS'),19000,'C',40);
-insert into point values('user03@mail.com',-1000,to_date('2022/11/26 14:33:01', 'YYYY/MM/DD HH24:MI:SS'),-2000,'B',null);
-insert into point values('user02@mail.com',20000,to_date('2022/11/26 14:34:56', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',41);
-insert into point values('user02@mail.com',-1000,to_date('2022/11/26 14:36:48', 'YYYY/MM/DD HH24:MI:SS'),19000,'B',null);
-insert into point values('user02@mail.com',20000,to_date('2022/11/26 14:37:00', 'YYYY/MM/DD HH24:MI:SS'),40000,'C',42);
-insert into point values('user02@mail.com',-1000,to_date('2022/11/26 14:37:05', 'YYYY/MM/DD HH24:MI:SS'),19000,'B',null);
-insert into point values('user01@mail.com',-60000,to_date('2022/11/30 18:54:34', 'YYYY/MM/DD HH24:MI:SS'),-47000,'B',null);
-insert into point values('user03@mail.com',100000,to_date('2022/11/30 18:58:55', 'YYYY/MM/DD HH24:MI:SS'),100000,'C',61);
-insert into point values('user03@mail.com',-60000,to_date('2022/11/30 18:59:36', 'YYYY/MM/DD HH24:MI:SS'),40000,'B',null);
-insert into point values('user02@mail.com',100000,to_date('2022/11/30 19:14:41', 'YYYY/MM/DD HH24:MI:SS'),119000,'C',62);
-insert into point values('user02@mail.com',-60000,to_date('2022/11/30 19:15:44', 'YYYY/MM/DD HH24:MI:SS'),-41000,'B',null);
-insert into point values('client01@mail.com',100000,to_date('2022/11/30 22:44:45', 'YYYY/MM/DD HH24:MI:SS'),100000,'C',65);
-insert into point values('client01@mail.com',10000,to_date('2022/11/30 22:50:54', 'YYYY/MM/DD HH24:MI:SS'),10000,'C',66);
-insert into point values('client02@mail.com',20000,to_date('2022/11/30 22:55:13', 'YYYY/MM/DD HH24:MI:SS'),20000,'C',67);
-insert into point values('client01@mail.com',200000,to_date('2022/12/01 22:55:24', 'YYYY/MM/DD HH24:MI:SS'),200000,'C',68);
-insert into point values('user01@mail.com',-60000,to_date('2022/12/02 14:59:09', 'YYYY/MM/DD HH24:MI:SS'),-107000,'B',null);
-insert into point values('user01@mail.com',-60000,to_date('2022/12/02 14:59:37', 'YYYY/MM/DD HH24:MI:SS'),-107000,'B',null);
-insert into point values('client01@mail.com',20000,to_date('2022/12/02 16:45:53', 'YYYY/MM/DD HH24:MI:SS'),220000,'C',71);
-insert into point values('user03@mail.com',90000,to_date('2022/12/02 16:48:13', 'YYYY/MM/DD HH24:MI:SS'),130000,'C',72);
-insert into point values('user03@mail.com',1000,to_date('2022/12/02 17:06:38', 'YYYY/MM/DD HH24:MI:SS'),131000,'C',73);
-insert into point values('user03@mail.com',1010,to_date('2022/12/02 17:21:31', 'YYYY/MM/DD HH24:MI:SS'),132010,'C',74);
-insert into point values('user03@mail.com',9999,to_date('2022/12/02 17:24:13', 'YYYY/MM/DD HH24:MI:SS'),142009,'C',75);
-insert into point values('user03@mail.com',-60000,to_date('2022/12/02 17:25:46', 'YYYY/MM/DD HH24:MI:SS'),82009,'B',null);
-insert into point values('user03@mail.com',-60000,to_date('2022/12/02 17:26:14', 'YYYY/MM/DD HH24:MI:SS'),82009,'B',null);
-insert into point values('user03@mail.com',20000,to_date('2022/12/02 17:26:28', 'YYYY/MM/DD HH24:MI:SS'),162009,'C',76);
-insert into point values('user01@mail.com',20000,to_date('2022/12/07 15:58:17', 'YYYY/MM/DD HH24:MI:SS'),-87000,'C',22);
-insert into point values('user01@mail.com',20000,to_date('2022/12/07 15:58:54', 'YYYY/MM/DD HH24:MI:SS'),-87000,'C',23);
-
+-- ÔøΩÔøΩÔøΩÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩ√∑ÔøΩ(char) : ÔøΩÔøΩÔøΩÔøΩ, ÔøΩÔøΩÔøΩ, ƒøÔøΩ¬¥ÔøΩ∆º, ÔøΩÃ∫ÔøΩ∆Æ(ÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ)
+-- ÔøΩÔøΩÔøΩÔøΩ ( C ), ÔøΩÔøΩÔøΩÔøΩ ( B ), ƒøÔøΩ¬¥ÔøΩ∆º ÔøΩÔøΩ ÔøΩ€ºÔøΩ ( W ), ÔøΩÃ∫ÔøΩ∆Æ ÔøΩÔøΩÔøΩÔøΩ ( E ), ÔøΩÔøΩÔøΩÔøΩ ÔøΩ€ºÔøΩ ( R )
 
 commit;
 select * from point;
+
+-- 2022-12-28 Ï∂îÍ∞Ä
+-- alter table point add reserv_no	number;
+-- alter table point add point_no number;

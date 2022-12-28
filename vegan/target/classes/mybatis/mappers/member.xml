@@ -42,6 +42,9 @@
 		<result property="point_history" column="point_history" />
 		<result property="point_detail" column="point_detail" />
 		<result property="point_date" column="point_date" />
+		<result property="reserv_no" column="reserv_no" />
+		<result property="point_no" column="point_no" />
+		<result property="resto_name" column="resto_name" />
 	</resultMap>
 	
 	<resultMap type="reservDTO" id="reservResult">
@@ -123,14 +126,14 @@
 	
 	<select id="selectCardPay" parameterType="String" resultType="card_payDTO">
 		<![CDATA[
-			select * from (select * from card_pay where email = #{card_payDTO.getEmail() } order by card_time desc) where rownum = 1
+			select * from (select * from card_pay where email = #{email } order by point_detail desc) where rownum = 1
 		]]>
-		<!-- point_detail: 거래 승인 번호가 최근인 순으로 정렬하는 sql문으로 수정하기 -->
+		<!-- 거래 승인 번호가 제일 최근인 건 가져옴 -->
 	</select>
 	
 	<insert id="insertPoint" parameterType="pointDTO">
 		<![CDATA[
-			insert into point values(#{email}, #{point_change}, #{point_rest}, #{point_history}, #{point_detail})
+			insert into point values(#{email}, #{point_change}, sysdate, #{point_rest}, #{point_history}, #{point_detail}, #{reserv_no}, seq_point.nextval)
 		]]>
 	</insert>
 	
@@ -155,7 +158,8 @@
 	
 	<select id="selectPointList" parameterType="String" resultMap="pointDTO">
 		<![CDATA[
-			select * from point where email = #{email} order by point_date desc
+			select email, point_change, point_date, point_history, reserv_no, (select resto_name from reserv r, point p where p.reserv_no = r.reserv_no) resto_name
+			from point where email = #{email} order by point_date desc
 		]]>
 	</select>
 	

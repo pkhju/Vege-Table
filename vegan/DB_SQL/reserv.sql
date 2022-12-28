@@ -1,20 +1,20 @@
 -- drop table reserv;
 
 create table reserv (
-    resto_name	varchar2(50)	 not null,		-- ½Ä´çÀÌ¸§
-    resto_addr	varchar2(150)	 not null,		-- ½Ä´çÁÖ¼Ò
-    c_email	varchar2(50)	not null,		-- Å¬¶óÀÌ¾ðÆ® ÀÌ¸ÞÀÏ
-    u_email	varchar2(50)	 not null,		-- À¯Àú ÀÌ¸ÞÀÏÁÖ¼Ò
-    reserv_no	 varchar2(50),		-- ¿¹¾à¹øÈ£
-    resto_no	 number	 not null,		-- ½Ä´çµî·Ï¹øÈ£
-    reserv_date	 date		 default sysdate,	-- ¿¹¾à³¯Â¥
-    reserv_sched	 varchar2(50)	 not null,		-- ¿¹¾àÀÏÁ¤
-    reserv_member	 number	 not null,		-- ¿¹¾àÀÎ¿ø
-    reserv_deposit	 number	 not null,		-- ¿¹¾àÆ÷ÀÎÆ®
-    reserv_condition	 char(1) default 'A'		-- ¿¹¾à´ë±â(a) ¿¹¾àÈ®Á¤(b) ¹æ¹®¿Ï·á(c) Ãë¼Ò(d) ³ë¼î(e)
+    resto_name	varchar2(50)	 not null,		-- ï¿½Ä´ï¿½ï¿½Ì¸ï¿½
+    resto_addr	varchar2(150)	 not null,		-- ï¿½Ä´ï¿½ï¿½Ö¼ï¿½
+    c_email	varchar2(50)	not null,		-- Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½Ì¸ï¿½ï¿½ï¿½
+    u_email	varchar2(50)	 not null,		-- ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½
+    reserv_no	 number,		-- ï¿½ï¿½ï¿½ï¿½ï¿½È£
+    resto_no	 number	 not null,		-- ï¿½Ä´ï¿½ï¿½Ï¹ï¿½È£
+    reserv_date	 date		 default sysdate,	-- ï¿½ï¿½ï¿½à³¯Â¥
+    reserv_sched	 varchar2(50)	 not null,		-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    reserv_member	 number	 not null,		-- ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½
+    reserv_deposit	 number	 not null,		-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    reserv_condition	 char(1) default 'A'		-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(a) ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½(b) ï¿½æ¹®ï¿½Ï·ï¿½(c) ï¿½ï¿½ï¿½(d) ï¿½ï¿½ï¿½(e)
 );
 
-update reserv set reserv_condition='E' where resto_name='¿¡ÀÌÄÜ';
+update reserv set reserv_condition='E' where resto_name='ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 
 commit;
 select * from reserv;
