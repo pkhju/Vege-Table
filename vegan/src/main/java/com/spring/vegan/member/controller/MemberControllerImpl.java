@@ -309,8 +309,10 @@ public class MemberControllerImpl implements MemberController {
 			if ( result == 1 ) {
 				// 포인트 충전 성공
 				if ( user_categoty.equals("user") ) {
+					user_onDTO = memberService.selectMemberInfo(email);
 					request.getSession().setAttribute("user_onDTO", user_onDTO);
 				} else if ( user_categoty.equals("client") ) {
+					client_onDTO = memberService.selectMemberInfo_c(email);
 					request.getSession().setAttribute("client_onDTO", client_onDTO);
 				}
 				mav.addObject("charge_point", "포인트가 충전되었습니다.");

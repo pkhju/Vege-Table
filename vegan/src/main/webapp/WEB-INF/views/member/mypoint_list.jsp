@@ -25,6 +25,8 @@
 </head>
 <body>
 <div class="mypageMain col-lg-8">
+
+	<!-- 프로필 섹션 시작 -->
 	<div class="profile col-lg-4">
 		<img src="${path }/resources/img/lion.png" class="proPick">
 					
@@ -54,14 +56,23 @@
 			</c:if>
 		</c:if>
 	<!-- client_on 프로필 끝 --> 
+	
 		<button type="button" class="btn btn-success" onClick="location.href='${path }/member/mypoint.do?command=frmCharge'"
 				style="background-color: #55771C; border: none;">포인트 충전</button>
 		<button type="button" class="btn btn-success" onClick="location.href='${path }/member/mypage_info.do'"
 			style="background-color: #55771C; border: none;">회원정보수정</button>
 	</div>
-        
+	<!-- 프로필 섹션 끝 -->
+	
+	<c:if test="${pointList == '[]' }">
+		<h6>포인트 사용 내역이 없습니다.</h6>
+	</c:if>
+	<!-- 포인트 사용 내역 시작 -->
 	<c:forEach var="item" items="${pointList }">
+		
 		<div class="point_list_item">
+			
+			
 			<c:choose>
 				<c:when test="${item.point_history == 'C' }">
 					<div class="pointDiv">
@@ -101,14 +112,19 @@
 			</c:choose>
 		</div>
 	</c:forEach>
-</div>
+	<!-- 포인트 사용 내역 끝 -->	
+</div> <!-- class="mypageMain col-lg-8" -->
+
 	<script>
         let pc = document.querySelectorAll('.pointChange');
         for (let i = 0; i < pc.length; i++) {
             if (parseInt(pc[i].innerText) > 0) {
                 pc[i].style.color = "blue";
+            } else {
+            	pc[i].style.color = "black";
             }
         }
+        console.log('${pointList}');
     </script>
 	
 </body>

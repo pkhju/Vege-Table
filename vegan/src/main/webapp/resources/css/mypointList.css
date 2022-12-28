@@ -34,6 +34,12 @@
 .pointDiv {
     margin-top: 20px;
 }
+h6 {
+	text-align: center;
+}
+.pointDate {
+	color: #555;
+}
 .pointChange {
     float:right;
 }

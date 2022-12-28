@@ -78,7 +78,7 @@
 						style="background-color: #55771C; border: none;">회원정보수정</button>
 					</div>
 					
-
+				<!-- 찜한 식당 시작 -->
 				<div class="container">
 					<h5 class="menuName">찜한 식당</h5>
 					<div class="scrap">
@@ -90,65 +90,84 @@
 							src="${path }/resources/img/iphone.png" class="scrapPic"></a>
 					</div>
 				</div>
-
+				<!-- 찜한 식당 끝 -->
+				
+				<!-- 스크랩한 게시물 시작 -->
 				<div class="container">
 					<h5 class="menuName">스크랩한 게시물</h5>
-					
-			<div class="scrap">
-				<c:forEach var="cs" items="${articleMap.cs }">
-				<a href="${path }/community/viewArticle.do?c_articleNo=${cs.c_articleNo}">
-				<img class="scrapPic" src="${path }/download.do?c_articleNo=${cs.c_articleNo}&c_image=${cs.c_image}" />
-				</a>
-				
-				</c:forEach>
-			</div>
-		
+				<c:if test="${articleMap.cs == '[]' }">
+					<div class="noContent"  style="">
+						<h6 class="noConTit" style="">스크랩한 게시물이 없습니다.</h6>
+					</div>
+				</c:if>		
+				<c:if test="${articleMap.cs != '[]' }">
+					<div class="scrap">
+						<c:forEach var="cs" items="${articleMap.cs }">
+						
+							<a href="${path }/community/viewArticle.do?c_articleNo=${cs.c_articleNo}">
+								<img class="scrapPic" src="${path }/download.do?c_articleNo=${cs.c_articleNo}&c_image=${cs.c_image}" />
+							</a>
+						</c:forEach>
+					</div>
+				</c:if>
 				</div>
+				<!-- 스크랩한 게시물 끝 -->
 				
+				<!-- 좋아요한 게시물 시작 -->
 				<div class="container">
 					<h5 class="menuName">좋아요한 게시물</h5>
 					
-			<div class="scrap">
-			<c:forEach var="heart" items="${articleMap.heart }">
-				<a href="${path }/community/viewArticle.do?c_articleNo=${heart.c_articleNo}">
-				<img class="scrapPic" src="${path }/download.do?c_articleNo=${heart.c_articleNo}&c_image=${heart.c_image}" />
-				</a>
-				
-				</c:forEach>
-			</div>
-		
+					<div class="scrap">
+						<c:forEach var="heart" items="${articleMap.heart }">
+							<c:if test="${heart == '[]' }">
+								<h6>좋아요한 게시물이 없습니다.</h6>
+							</c:if>
+							<a href="${path }/community/viewArticle.do?c_articleNo=${heart.c_articleNo}">
+								<img class="scrapPic" src="${path }/download.do?c_articleNo=${heart.c_articleNo}&c_image=${heart.c_image}" />
+							</a>
+						</c:forEach>
+					</div>
 				</div>
-
+				<!-- 좋아요한 게시물 끝 -->
+				
+				<!-- 작성한 글 시작 -->
 			 	<div class="container">
 					<h5 class="menuName">작성한 글</h5>
-					
-			<div class="scrap">
-			<c:forEach var="write" items="${articleMap.write }">
-				<a href="${path }/community/viewArticle.do?c_articleNo=${write.c_articleNo}">
-				<img class="scrapPic" src="${path }/download.do?c_articleNo=${write.c_articleNo}&c_image=${write.c_image}" />
-				</a>
-				
-				</c:forEach>
-			</div>
-		
+					<c:if test="${write == '[]' }">
+						<h6>작성한 글이 없습니다.</h6>
+					</c:if>
+					<div class="scrap">
+						<c:forEach var="write" items="${articleMap.write }">
+							<a href="${path }/community/viewArticle.do?c_articleNo=${write.c_articleNo}">
+								<img class="scrapPic" src="${path }/download.do?c_articleNo=${write.c_articleNo}&c_image=${write.c_image}" />
+							</a>
+						</c:forEach>
+					</div>
 				</div>  
+				<!-- 작성한 글 끝 -->
 				
+				<!-- 문의내역 시작 -->
 				<div class="container">
 					<h5 class="menuName">문의내역</h5>
-					
-			<div class="scrap">
-			<c:forEach var="iq" items="${articleMap.iq }">
-				<a href="${path }/community/viewInquery.do?iq_no=${iq.iq_no}">
-				<img class="scrapPic" src="${path }/download2.do?iq_no=${iq.iq_no}&iq_image=${iq.iq_image}" />
-				</a>
-				
-				</c:forEach>
-			</div>
-		
+					<c:if test="${iq == '[]' }">
+						<h6>문의내역이 없습니다.</h6>
+					</c:if>
+					<div class="scrap">
+					<c:forEach var="iq" items="${articleMap.iq }">
+						<a href="${path }/community/viewInquery.do?iq_no=${iq.iq_no}">
+							<img class="scrapPic" src="${path }/download2.do?iq_no=${iq.iq_no}&iq_image=${iq.iq_image}" />
+						</a>
+					</c:forEach>
+					</div>
 				</div>
-
+				<!-- 문의내역 끝 -->
+				
+				<!-- 작성한 리뷰 시작 -->
 				<div class="container">
 					<h5 class="menuName">작성한 리뷰</h5>
+					<c:if test="${iq == '[]' }">
+						<h6>작성한 리뷰가 없습니다.</h6>
+					</c:if>
 					<div class="scrap">
 						<a href=""><img src="${path }/resources/img/iphone.png"
 							class="scrapPic"></a> <a href=""><img
@@ -158,6 +177,8 @@
 							src="${path }/resources/img/iphone.png" class="scrapPic"></a>
 					</div>
 				</div>
+				<!-- 작성한 리뷰 끝 -->
+				
 			</c:when>
 			<c:otherwise>
 				<!--  -->
