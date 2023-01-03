@@ -6,11 +6,13 @@ create table reply(
     reply_content varchar2(500),
     reply_writeDate date default sysdate,
     u_email VARCHAR2(50) not null,
-    show char(1) default 'Y',
-    constraint reply_articleNo foreign key (c_articleNo) references community(c_articleNo),
-    constraint reply_email foreign key (u_email) references user_on(u_email)
+    show char(1) default 'Y'
+    -- constraint reply_articleNo foreign key (c_articleNo) references community(c_articleNo),
+    -- constraint reply_email foreign key (u_email) references user_on(u_email)
 );
-create SEQUENCE reply_seq START WITH 1 INCREMENT by 1;
+create SEQUENCE reply_seq
+START WITH 1
+INCREMENT by 1;
 
 commit;
 select * from reply;

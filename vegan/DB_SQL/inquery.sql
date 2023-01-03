@@ -8,8 +8,8 @@ create table inquery(
     iq_content	 varchar2(500)	 not null,		-- 내용
     iq_image	 varchar2(500), -- 이미지
     search_type VARCHAR2(50) default '', -- 검색필터
-    keyword VARCHAR2(50) default '', --검색어
-    constraint inquery_email foreign key (u_email) references user_on(u_email)
+    keyword VARCHAR2(50) default '' --검색어
+    -- constraint inquery_email foreign key (u_email) references user_on(u_email)
 );
 
 insert into inquery values(1, 'user01@mail.com', '뭔의', sysdate, 'zzz', 'null', default, default);
