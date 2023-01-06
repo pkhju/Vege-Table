@@ -173,7 +173,6 @@ public class MemberDAOImpl implements MemberDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-
 		return list;
 	}
 

@@ -128,7 +128,7 @@
 		<![CDATA[
 			select * from (select * from card_pay where email = #{email } order by point_detail desc) where rownum = 1
 		]]>
-		<!-- 거래 승인 번호가 제일 최근인 건 가져옴 -->
+		<!-- 거래 승인 번호가 제일 최근인 건 가져옴 --> 
 	</select>
 	
 	<insert id="insertPoint" parameterType="pointDTO">
