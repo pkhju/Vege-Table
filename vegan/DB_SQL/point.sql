@@ -1,16 +1,17 @@
 -- drop table point;
 
 create table point (
-	point_no number not null, -- Æ÷ÀÎÆ® µî·Ï ½ÃÄö½º
-	email varchar2(50) not null, -- À¯Àú ¶Ç´Â Å¬¶óÀÌ¾ğÆ® ÀÌ¸ŞÀÏ
-	point_change number, -- Æ÷ÀÎÆ® º¯È­°ª
-	point_rest number, -- ³²ÀºÆ÷ÀÎÆ®
-	point_history char(1), -- Æ÷ÀÎÆ® º¯µ¿³»¿ª
-	point_detail number, -- Æ÷ÀÎÆ® ÃæÀü °Å·¡¹øÈ£
-	reserv_no number -- ¿¹¾à ¹øÈ£
+	point_no number not null, -- í¬ì¸íŠ¸ ë“±ë¡ ì‹œí€€ìŠ¤
+	email varchar2(50) not null, -- ìœ ì € ë˜ëŠ” í´ë¼ì´ì–¸íŠ¸ ì´ë©”ì¼
+	point_change number, -- í¬ì¸íŠ¸ ë³€í™”ê°’
+	point_rest number, -- ë‚¨ì€í¬ì¸íŠ¸
+	point_history char(1), -- í¬ì¸íŠ¸ ë³€ë™ë‚´ì—­
+	point_detail number, -- í¬ì¸íŠ¸ ì¶©ì „ ê±°ë˜ë²ˆí˜¸
+	reserv_no number, -- ì˜ˆì•½ ë²ˆí˜¸
+	point_date default sysdate
 );
--- Æ÷ÀÎÆ® º¯µ¿³»¿ª ÄÃ·³(char) : ÃæÀü, »ç¿ë, Ä¿¹Â´ÏÆ¼, ÀÌº¥Æ®(°æ¿ìÀÇ ¼ö°¡ Á¤ÇØÁ® ÀÖÀ½)
--- ÃæÀü ( C ), ¿¹¾à ( B ), Ä¿¹Â´ÏÆ¼ ±Û ÀÛ¼º ( W ), ÀÌº¥Æ® Âü¿© ( E ), ¸®ºä ÀÛ¼º ( R )
+-- í¬ì¸íŠ¸ ë³€ë™ë‚´ì—­ ì»¬ëŸ¼(char) : ì¶©ì „, ì‚¬ìš©, ì»¤ë®¤ë‹ˆí‹°, ì´ë²¤íŠ¸(ê²½ìš°ì˜ ìˆ˜ê°€ ì •í•´ì ¸ ìˆìŒ)
+-- ì¶©ì „ ( C ), ì˜ˆì•½ ( B ), ì»¤ë®¤ë‹ˆí‹° ê¸€ ì‘ì„± ( W ), ì´ë²¤íŠ¸ ì°¸ì—¬ ( E ), ë¦¬ë·° ì‘ì„± ( R )
 
 create sequence point_seq
 start with 1
@@ -21,7 +22,8 @@ insert into point values(point_seq.nextval, 'user01@mail.com', 50, 0, 'W', null,
 commit;
 select * from point;
 
--- 2022-12-28 ¼öÁ¤
+-- 2022-12-28 ìˆ˜ì •
 -- alter table point add reserv_no	number;
 -- alter table point add point_no number;
--- Å×ÀÌºí¿¡ ¼öÁ¤µÇ¾î ÀÖÀ½
+-- alter table point add point_date default sysdate;
+-- í…Œì´ë¸”ì— ìˆ˜ì •ë˜ì–´ ìˆìŒ

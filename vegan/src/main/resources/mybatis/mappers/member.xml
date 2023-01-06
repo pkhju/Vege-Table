@@ -133,7 +133,7 @@
 	
 	<insert id="insertPoint" parameterType="pointDTO">
 		<![CDATA[
-			insert into point values(#{email}, #{point_change}, sysdate, #{point_rest}, #{point_history}, #{point_detail}, #{reserv_no}, seq_point.nextval)
+			insert into point values(point_seq.nextval, #{email}, #{point_change}, #{point_rest}, #{point_history}, #{point_detail}, #{reserv_no}, default)
 		]]>
 	</insert>
 	

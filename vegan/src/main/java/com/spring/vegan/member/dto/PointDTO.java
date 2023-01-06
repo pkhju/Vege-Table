@@ -64,5 +64,17 @@ public class PointDTO {
 	public void setResto_name(String resto_name) {
 		this.resto_name = resto_name;
 	}
+	public int getReserv_no() {
+		return reserv_no;
+	}
+	public void setReserv_no(int reserv_no) {
+		this.reserv_no = reserv_no;
+	}
+	public int getPoint_no() {
+		return point_no;
+	}
+	public void setPoint_no(int point_no) {
+		this.point_no = point_no;
+	}
 
 }
