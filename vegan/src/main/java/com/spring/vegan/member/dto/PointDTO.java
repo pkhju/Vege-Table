@@ -17,7 +17,7 @@ public class PointDTO {
 	private int point_rest; // 남은 포인트: 기존 포인트 + 포인트 변화값
 	private String point_history; // 포인트 변경 사유, 충전: C, 예약: B, 커뮤니티 글 작성: W, 이벤트 참여: E, 리뷰 작성: R
 	private int point_detail; // 포인트 충전 거래 번호(승인번호)
-	private Date point_date; // 포인트 충전 거래 번호(승인번호)
+	private Date point_date; // 포인트 내역 저장 일자
 	private int reserv_no; // 예약시 포인트 사용한 경우 예약번호 저장
 	private int point_no; // 포인트 사용 내역 번호 (seq)
 	private String resto_name; // 테이블에는 없는데 포인트 사용내역에 업체명 표시하려고 넣음
