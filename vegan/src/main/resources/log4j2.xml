@@ -12,7 +12,7 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
 			<PatternLayout pattern="${layoutPattern}"/>
         </Console>
-        <RollingFile name="DailyFileAppender" fileName="E:\\log\\outlog.log" filePattern="E:\\log\\outlog_%d{yyyy-MM-dd}.log">
+        <RollingFile name="DailyFileAppender" fileName="C:\\log_vegan\\outlog.log" filePattern="C:\\log_vegan\\outlog_%d{yyyy-MM-dd}.log">
             <PatternLayout pattern="${layoutPattern}"/>
             <Policies>
                 <SizeBasedTriggeringPolicy size="200KB"/>

@@ -51,9 +51,9 @@ public class CommunityControllerImpl implements CommunityController{
 	@Autowired
 	private CommunityService communityService;
 	
-	private static final String VEGI_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Vegi_Image";
-	private static final String INQUERY_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Inquery_Image";
-	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
+	private static final String VEGI_UPLOAD = "C:\\Vegan_Image\\Vegi_Image";
+	private static final String INQUERY_UPLOAD = "C:\\Vegan_Image\\Inquery_Image";
+	private static final String EVENT_UPLOAD = "C:\\Vegan_Image\\Event_Image";
 
 	@Override
 	@RequestMapping("/community.do")

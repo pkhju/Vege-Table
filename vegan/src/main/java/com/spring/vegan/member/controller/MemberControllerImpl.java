@@ -50,7 +50,7 @@ import com.spring.vegan.member.dto.Iq_ReplyDTO;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MemberControllerImpl implements MemberController {
 	private static final Logger logger = LogManager.getLogger(MemberControllerImpl.class);
-	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
+	private static final String EVENT_UPLOAD = "C:\\Vegan_Image\\Event_Image";
 	
 	@Autowired
 	private MemberService memberService;

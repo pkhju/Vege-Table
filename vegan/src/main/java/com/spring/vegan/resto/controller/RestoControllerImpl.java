@@ -39,8 +39,8 @@ import com.spring.vegan.resto.service.RestoService;
 
 @Controller
 public class RestoControllerImpl implements RestoController{
-	private static final String RESTO_IMAGE_REPO = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Resto_Image";
-	private static final String REVIEW_IMAGE_REPO = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Review_Image";
+	private static final String RESTO_IMAGE_REPO = "C:\\Vegan_Image\\Resto_Image";
+	private static final String REVIEW_IMAGE_REPO = "C:\\Vegan_Image\\Review_Image";
 	@Autowired
 	RestoService restoService;
 

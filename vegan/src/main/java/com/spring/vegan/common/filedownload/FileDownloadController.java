@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class FileDownloadController {
-	private static final String RESTO_IMAGE_REPO = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Resto_Image";
-	private static final String REVIEW_IMAGE_REPO = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Review_Image";
-	private static final String VEGI_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Vegi_Image";
-	private static final String INQUERY_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Inquery_Image";
-	private static final String EVENT_UPLOAD = "C:\\Users\\UserF\\Desktop\\YSH\\Vegan_Image\\Event_Image";
+	private static final String RESTO_IMAGE_REPO = "C:\\Vegan_Image\\Resto_Image";
+	private static final String REVIEW_IMAGE_REPO = "C:\\Vegan_Image\\Review_Image";
+	private static final String VEGI_UPLOAD = "C:\\Vegan_Image\\Vegi_Image";
+	private static final String INQUERY_UPLOAD = "C:\\Vegan_Image\\Inquery_Image";
+	private static final String EVENT_UPLOAD = "C:\\Vegan_Image\\Event_Image";
 
 	@RequestMapping("/downloadRestoImage.do")
 	public void downloadRestoImage(@RequestParam("imageFileName") String imageFileName,
