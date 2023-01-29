@@ -26,7 +26,7 @@
         <a href="#"><img src="<c:url value='/resources/img/vegetable_logos_finals/tight_light_mask.png' />" class="logoImg"></a>
     </div>
 
-    <div class="col-lg-3 container">
+    <div class="col-lg-4 container">
         <h4 class="mb-3">포인트 충전</h4>
 
         <form class="needs-validation" novalidate name="frmCharge" method="post">
@@ -34,7 +34,7 @@
                 <!-- 충전금액 시작 -->
                 <div>
                     <label class="form-label">충전금액</label>
-                    <input type="text" class="form-control form30" name="input_point" id="input_point" placeholder="충전할 금액 입력" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" class="form-control form30" name="input_point" id="input_point" placeholder="충전 금액 입력" required="required" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     <span class="form_option">충전할 금액을 입력하세요. (1만원부터 충전 가능)</span>
                 </div>
                 <!-- 충전금액 끝 -->
@@ -59,26 +59,28 @@
                 <!-- 카드번호 시작 -->
                 <label class="form-label">카드번호</label>
                 <div class="col-12">
-                    <input type="text" class="form-control form20" name="card_no1" required id="card_no1" value="1205" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                    <input type="text" class="form-control form20" name="card_no2" required id="card_no2" value="6378" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                    <input type="text" class="form-control form20" name="card_no3" required id="card_no3" value="9000" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
-                    <input type="text" class="form-control form20" name="card_no4" required id="card_no4" value="0343" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" class="form-control form20" name="card_no1" required id="card_no1" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" class="form-control form20" name="card_no2" required id="card_no2" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" class="form-control form20" name="card_no3" required id="card_no3" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <input type="text" class="form-control form20" name="card_no4" required id="card_no4" maxlength="4" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                 </div>
                 <!-- 카드번호 끝 -->
+                
                 <div class="between"></div>
+                
                 <!-- 유효기간 선택 시작 -->
                 <div class="col-12" style="float:left;">
                     <label class="form-label">유효기간</label>
                     <select class="form-select form25" required name="card_valid_m" id="card_valid_m">
-                        <option >선택</option>
+                        <option selected="selected">선택</option>
                         <c:forEach var="i" begin="1" end="12" step="1">
-                            <option value="${i }" selected="selected">${i }</option>	
+                            <option value="${i }">${i }</option>	
                         </c:forEach>
                     </select><span class="form_option">월&nbsp;</span>
                     <select class="form-select form25" required name="card_valid_y" id="card_valid_y">
-                        <option >선택</option>
+                        <option selected="selected">선택</option>
                         <c:forEach var="j" begin="2022" end="2035" step="1">
-                            <option value="${j }" selected="selected">${j }</option>	
+                            <option value="${j }">${j }</option>	
                         </c:forEach>
                     </select><span class="form_option">년&nbsp;</span>
                 </div>
@@ -89,8 +91,8 @@
                 <div class="col-12">
                     <label class="form-label">할부기간(월)</label>
                     <select class="form-select form25" required name="card_month">
-                        <option >선택</option>
-                        <option selected value="1">일시불</option>
+                        <option selected>선택</option>
+                        <option value="1">일시불</option>
                         <option value="2">2개월</option>	
                         <option value="3">3개월</option>	
                         <option value="4">4개월</option>	
@@ -103,14 +105,14 @@
                 <!-- 신용카드 비밀번호 시작 -->
                 <label class="form-label">신용카드 비밀번호</label>
                 <div class="col-lg-12">
-                    <input type="password" class="form-control form20" name="card_pwd" value="55" required placeholder="**" id="card_pwd" maxlength="2"> **<span class="form_option">&nbsp;앞 두자리</span>
+                    <input type="password" class="form-control form20" name="card_pwd" required placeholder="**" id="card_pwd" maxlength="2"> **<span class="form_option">&nbsp;앞 두자리</span>
                 </div>
                 <!-- 신용카드 비밀번호 끝 -->
                 <div class="between"></div>
                 <!-- 인증번호 시작 -->
                 <div>
                     <label class="form-label">인증번호</label>
-                    <input type="text" class="form-control form30" name="card_regiNum" required maxlength="10" value="123456" id="card_regiNum" placeholder="주민등록번호 앞 6자리 또는 사업자등록번호 10자리">
+                    <input type="text" class="form-control form30" name="card_regiNum" required maxlength="10" id="card_regiNum" placeholder="주민등록번호 앞 6자리 또는 사업자등록번호 10자리">
                     <span class="form_option">주민등록번호 앞 6자리 또는 사업자등록번호 10자리</span>
                 </div>
                 <!-- 인증번호 끝 -->

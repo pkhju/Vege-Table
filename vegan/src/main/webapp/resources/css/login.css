@@ -60,3 +60,23 @@
 	margin-top: 1em;
 }
 
+/* 테스트 계정 정보 */
+#box_sign_info {
+	width: 300px;
+	height: 300px;
+	border-radius: 10px;
+	position: fixed;
+	top: 20%;
+	left: 100px;
+	box-shadow: 2px 3px 5px #777;
+	background: white;
+}
+.inner_sign {
+	line-height: 1.5;
+	position: relative;
+	padding: 20px;
+	height: 400px;
+}
+.h4_sign {
+    text-align: center;
+}

@@ -12,7 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="<c:url value='/resources/css/common.css' />"> 
-	<link href="${path }/resources/css/login.css" rel="stylesheet">
+	<link href="${path }/resources/css/login.css?ver=1.0" rel="stylesheet">
 	<script src="${path }/resources/script/login.js"></script>
 
 </head>
@@ -150,6 +150,18 @@
 		</script>
     </c:if>
 	
+	<!-- 테스트 계정 정보 시작 -->
+	<div id="box_sign_info">
+        <div class="inner_sign">
+            <h4 class="h4_sign">테스트 계정</h4>
+            <div>일반 사용자</div>
+            <div>아이디: user01@mail.com <br>비밀번호: 1111</div>
+            <hr>         
+            <div>사업자 사용자</div>
+            <div>아이디: client@mail.com <br>비밀번호: 1111</div>
+        </div>
+    </div>
+    <!-- 테스트 계정 정보 끝 -->
 </body>
 
 </html>

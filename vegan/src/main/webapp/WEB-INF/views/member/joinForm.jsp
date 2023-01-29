@@ -33,7 +33,7 @@
                 <div class="col-12">
                     <label class="form-label">이메일</label>
                     <div class="input-group flex-nowrap replyInput">
-                        <input type="email" name="input_email" value="aaa111@mail.com" class="form-control" aria-describedby="addon-wrapping">
+                        <input type="email" name="input_email" class="form-control" aria-describedby="addon-wrapping">
                         <button class="input-group-text" id="btn_email" type="button">중복확인</button>
                     </div>
                     <div class="result r_true txt_email_t">사용 가능한 이메일 입니다.</div>
